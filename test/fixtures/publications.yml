@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  transaction_type: MyString
+  property_type: MyString
+  address: MyString
+  area: 9.99
+  number_of_rooms: 1
+  price: 9.99
+  expenses: 9.99
+  age: 1
+  phone: MyString
+
+two:
+  transaction_type: MyString
+  property_type: MyString
+  address: MyString
+  area: 9.99
+  number_of_rooms: 1
+  price: 9.99
+  expenses: 9.99
+  age: 1
+  phone: MyString
