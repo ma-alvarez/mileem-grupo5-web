@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Transaction type:</strong>
+  <%= @publication.transaction_type %>
+</p>
+
+<p>
+  <strong>Property type:</strong>
+  <%= @publication.property_type %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @publication.address %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @publication.area %>
+</p>
+
+<p>
+  <strong>Number of rooms:</strong>
+  <%= @publication.number_of_rooms %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @publication.price %>
+</p>
+
+<p>
+  <strong>Expenses:</strong>
+  <%= @publication.expenses %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @publication.age %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @publication.phone %>
+</p>
+
+<%= link_to 'Edit', edit_publication_path(@publication) %> |
+<%= link_to 'Back', publications_path %>

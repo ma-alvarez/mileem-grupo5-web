@@ -1,0 +1,41 @@
+<h1>Listing publications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Transaction type</th>
+      <th>Property type</th>
+      <th>Address</th>
+      <th>Area</th>
+      <th>Number of rooms</th>
+      <th>Price</th>
+      <th>Expenses</th>
+      <th>Age</th>
+      <th>Phone</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @publications.each do |publication| %>
+      <tr>
+        <td><%= publication.transaction_type %></td>
+        <td><%= publication.property_type %></td>
+        <td><%= publication.address %></td>
+        <td><%= publication.area %></td>
+        <td><%= publication.number_of_rooms %></td>
+        <td><%= publication.price %></td>
+        <td><%= publication.expenses %></td>
+        <td><%= publication.age %></td>
+        <td><%= publication.phone %></td>
+        <td><%= link_to 'Show', publication %></td>
+        <td><%= link_to 'Edit', edit_publication_path(publication) %></td>
+        <td><%= link_to 'Destroy', publication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Publication', new_publication_path %>
