@@ -1,49 +1,37 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Publication -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>Transaction type:</strong>
-  <%= @publication.transaction_type %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:transaction_type) %>:</strong></dt>
+  <dd><%= @publication.transaction_type %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:property_type) %>:</strong></dt>
+  <dd><%= @publication.property_type %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:address) %>:</strong></dt>
+  <dd><%= @publication.address %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:area) %>:</strong></dt>
+  <dd><%= @publication.area %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:number_of_rooms) %>:</strong></dt>
+  <dd><%= @publication.number_of_rooms %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:price) %>:</strong></dt>
+  <dd><%= @publication.price %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:expenses) %>:</strong></dt>
+  <dd><%= @publication.expenses %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:age) %>:</strong></dt>
+  <dd><%= @publication.age %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
+  <dd><%= @publication.phone %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @publication.user_id %></dd>
+</dl>
 
-<p>
-  <strong>Property type:</strong>
-  <%= @publication.property_type %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @publication.address %>
-</p>
-
-<p>
-  <strong>Area:</strong>
-  <%= @publication.area %>
-</p>
-
-<p>
-  <strong>Number of rooms:</strong>
-  <%= @publication.number_of_rooms %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @publication.price %>
-</p>
-
-<p>
-  <strong>Expenses:</strong>
-  <%= @publication.expenses %>
-</p>
-
-<p>
-  <strong>Age:</strong>
-  <%= @publication.age %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @publication.phone %>
-</p>
-
-<%= link_to 'Edit', edit_publication_path(@publication) %> |
-<%= link_to 'Back', publications_path %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              publications_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_publication_path(@publication), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              publication_path(@publication),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
