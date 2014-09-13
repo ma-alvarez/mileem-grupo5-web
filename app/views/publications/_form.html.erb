@@ -78,6 +78,9 @@
     </div>
     <%= error_span(@publication[:phone]) %>
   </div>
+  
+  <%= f.label :image %>
+  <%= f.file_field :image %>
 
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

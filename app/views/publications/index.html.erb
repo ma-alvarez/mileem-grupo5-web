@@ -15,6 +15,7 @@
       <th><%= model_class.human_attribute_name(:expenses) %></th>
       <th><%= model_class.human_attribute_name(:age) %></th>
       <th><%= model_class.human_attribute_name(:phone) %></th>
+      <th><%= model_class.human_attribute_name(:image) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -32,6 +33,7 @@
         <td><%= publication.expenses %></td>
         <td><%= publication.age %></td>
         <td><%= publication.phone %></td>
+        <td><%= publication.image_url %></td>
         <td><%=l publication.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
