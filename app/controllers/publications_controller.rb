@@ -16,6 +16,7 @@ class PublicationsController < ApplicationController
   # GET /publications/new
   def new
     @publication = current_user.publications.new
+    @publication_attachment = @publication.publication_attachments.build
   end
 
   # GET /publications/1/edit
@@ -26,14 +27,14 @@ class PublicationsController < ApplicationController
   # POST /publications.json
   def create
     @publication = current_user.publications.new(publication_params)
-
     respond_to do |format|
       if @publication.save
-        format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
-        format.json { render :show, status: :created, location: @publication }
+        params[:publication_attachments]['image'].each do |a|
+        @publication_attachment = @publication.publication_attachments.create!(:image => a, :publication_id => @publication.id)
+      end
+       format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,6 +71,6 @@ class PublicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publication_params
-      params.require(:publication).permit(:transaction_type, :property_type, :address, :area, :number_of_rooms, :price, :expenses, :age, :phone, :image)
+      params.require(:publication).permit(:transaction_type, :property_type, :address, :area, :number_of_rooms, :price, :expenses, :age, :phone, publication_attachments_attributes: [:id, :publication_id, :image])
     end
 end

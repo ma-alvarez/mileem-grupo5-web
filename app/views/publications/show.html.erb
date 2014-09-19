@@ -22,8 +22,10 @@
   <dd><%= @publication.age %></dd>
   <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
   <dd><%= @publication.phone %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:image) %>:</strong></dt>
-  <dd><%= @publication.image_url %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:publication_attachments) %>:</strong></dt>
+  <% @publication.publication_attachments.each do |p| %>
+  <%= image_tag p.image_url %>
+<% end %>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
