@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :publications 
+
+  ACCOUNT_TYPES = [['Free',"Free"],['Basic','Basic'],['Premium','Basic']]
 end
