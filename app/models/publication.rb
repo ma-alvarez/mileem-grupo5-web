@@ -4,4 +4,8 @@ class Publication < ActiveRecord::Base
   accepts_nested_attributes_for :publication_attachments
   validates :transaction_type, :address, :phone, :price, presence: true
   validates_numericality_of :number_of_rooms, :price, :age, :expenses, :area, greater_than:0
+
+  TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
+  PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento'], ['Depósito','Depósito'], ['Local','Local']]
+  NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
 end
