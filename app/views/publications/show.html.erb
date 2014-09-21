@@ -22,6 +22,10 @@
   <dd><%= @publication.age %></dd>
   <dt><strong><%= model_class.human_attribute_name(:phone) %>:</strong></dt>
   <dd><%= @publication.phone %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:zone) %>:</strong></dt>
+  <dd><%= @publication.zone%></dd>
+  <dt><strong><%= model_class.human_attribute_name(:publication_date) %>:</strong></dt>
+  <dd><%= @publication.publication_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:publication_attachments) %>:</strong></dt>
   <% @publication.publication_attachments.each do |p| %>
   <%= image_tag p.image_url %>
