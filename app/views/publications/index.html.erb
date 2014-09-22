@@ -1,11 +1,10 @@
 <%- model_class = Publication -%>
 <div class="page-header">
-<h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+<h1>Publicaciones</h1>
 </div>
 <table class="table table-striped">
 <thead>
 <tr>
-<th><%= model_class.human_attribute_name(:id) %></th>
 <th><%= model_class.human_attribute_name(:transaction_type) %></th>
 <th><%= model_class.human_attribute_name(:property_type) %></th>
 <th><%= model_class.human_attribute_name(:address) %></th>
@@ -22,8 +21,7 @@
 <tbody>
 <% @publications.each do |publication| %>
 <tr>
-<td><%= link_to publication.id, publication_path(publication) %></td>
-<td><%= publication.transaction_type %></td>
+<td><%= link_to publication.transaction_type, publication_path(publication) %></td>
 <td><%= publication.property_type %></td>
 <td><%= publication.address %></td>
 <td><%= publication.area %></td>

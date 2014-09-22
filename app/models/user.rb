@@ -6,5 +6,5 @@ class User < ActiveRecord::Base
 
   has_many :publications 
 
-  ACCOUNT_TYPES = [['Free',"Free"],['Basic','Basic'],['Premium','Basic']]
+  ACCOUNT_TYPES = [['Free',"Free"],['Basic','Basic'],['Premium','Premium']]
 end
