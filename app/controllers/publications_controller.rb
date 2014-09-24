@@ -28,7 +28,7 @@ class PublicationsController < ApplicationController
   def create
     @publication = current_user.publications.new(publication_params)
     set_relevance(current_user)
-    binding.pry
+    #binding.pry
     respond_to do |format|
       if @publication.save
         if params[:publication_attachments]
