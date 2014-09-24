@@ -27,6 +27,7 @@ class PublicationsController < ApplicationController
   # POST /publications.json
   def create
     @publication = current_user.publications.new(publication_params)
+    set_relevance(current_user)
     respond_to do |format|
       if @publication.save
         if params[:publication_attachments]
@@ -74,5 +75,15 @@ class PublicationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def publication_params
       params.require(:publication).permit(:transaction_type, :property_type, :address, :area, :zone, :publication_date, :number_of_rooms, :price, :expenses, :age, :phone, publication_attachments_attributes: [:id, :publication_id, :image])
+    end
+
+    def set_relevance(user)
+      if user.account_type == "Free"
+        @publication.relevance = 1
+      elsif user.account_type == "Basic"
+        @publication.relevance = 2
+      elsif user.account_type == "Premium"
+        @publication.relevance = 3
+      end
     end
 end

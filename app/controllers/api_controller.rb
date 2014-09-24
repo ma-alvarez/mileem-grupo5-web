@@ -9,10 +9,10 @@ class ApiController < ApplicationController
 
   def filter_publications
   	params.each do |key,value|
-  		Rails.logger.info "Param #{key}: #{value}"
-	end
-	@publications = Publication.all
-	respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
+      Rails.logger.info "Param #{key}: #{value}"
+	  end
+	  @publications = Publication.all
+	  respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
   end
 
 end
