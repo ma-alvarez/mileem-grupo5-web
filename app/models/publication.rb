@@ -8,5 +8,5 @@ class Publication < ActiveRecord::Base
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
-
+  CURRENCIES = [['$ (Pesos Argentinos)','$'] ,['US$ (Dólares)', 'US$']]
 end

@@ -14,7 +14,7 @@
 <th><%= model_class.human_attribute_name(:expenses) %></th>
 <th><%= model_class.human_attribute_name(:age) %></th>
 <th><%= model_class.human_attribute_name(:phone) %></th>
-<th><%= model_class.human_attribute_name(:created_at) %></th>
+<th><%= model_class.human_attribute_name(:publication_date) %></th>
 <th><%=t '.actions', :default => t("helpers.actions") %></th>
 </tr>
 </thead>
@@ -26,11 +26,11 @@
 <td><%= publication.address %></td>
 <td><%= publication.area %></td>
 <td><%= publication.number_of_rooms %></td>
-<td><%= publication.price %></td>
+<td><%= publication.currency + publication.price.to_s%></td>
 <td><%= publication.expenses %></td>
 <td><%= publication.age %></td>
 <td><%= publication.phone %></td>
-<td><%= publication.created_at.strftime("%d %b. %Y") %></td>
+<td><%= publication.publication_date.strftime("%d %b. %Y") %></td>
 <td>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
 edit_publication_path(publication), :class => 'btn btn-default btn-xs' %>

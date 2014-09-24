@@ -218,3 +218,5 @@ es:
         publication_attachments: "Fotos"
         transaction_type: "Tipo de transacción"
         zone: "Barrio"
+        currency: "Moneda"
+        

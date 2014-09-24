@@ -30,6 +30,10 @@
 		</div>
 	</div>
 	<div class = "row">
+		<div class="col-xs-2">
+			<%= f.label :currency, class: "control-label" %>
+			<%= f.select(:currency, Publication::CURRENCIES, {}, {class: "form-control"}) %>
+		</div>
 		<div class="col-xs-1">
 			<%= f.label :price, class: "control-label" %>
 			<%= f.text_field :price, class: "form-control"%>
