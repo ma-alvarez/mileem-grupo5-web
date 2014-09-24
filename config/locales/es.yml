@@ -201,3 +201,20 @@ es:
   activerecord:
     models:
       publication: Publicación
+    attributes:
+      publication:
+        name: "Business name"
+        address: "Dirección"
+        age: "Antiguedad"
+        area: "Superficie"
+        created_at: "Fecha de creación"
+        expenses: "Expensas"
+        name: "Publicación"
+        number_of_rooms: "Ambientes"
+        phone: "Teléfono"
+        price: "Precio"
+        property_type: "Tipo de propiedad"
+        publication_date: "Fecha de publicación"
+        publication_attachments: "Fotos"
+        transaction_type: "Tipo de transacción"
+        zone: "Barrio"
