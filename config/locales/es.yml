@@ -206,7 +206,7 @@ es:
       publication:
         name: "Business name"
         address: "Dirección"
-        age: "Antiguedad"
+        age: "Antigüedad"
         area: "Superficie"
         created_at: "Fecha de creación"
         expenses: "Expensas"
