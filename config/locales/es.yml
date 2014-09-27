@@ -227,5 +227,7 @@ es:
         password_confirmation: "Confirmar contraseña"
         account_type: "Tipo de cuenta"
         remember_me: "Recordarme"
+      publication_attachment:
+        image: "Imágenes"
 
         
