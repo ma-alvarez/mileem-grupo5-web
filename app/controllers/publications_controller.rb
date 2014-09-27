@@ -32,9 +32,10 @@ class PublicationsController < ApplicationController
       if @publication.save
         if params[:publication_attachments]
           params[:publication_attachments]['image'].each do |a|
-          @publication_attachment = @publication.publication_attachments.create!(:image => a, :publication_id => @publication.id)
+            @publication_attachment = 
+              @publication.publication_attachments.create!(:image => a, :publication_id => @publication.id)
+          end
         end
-      end
         format.html { redirect_to @publication, notice: 'La publicación fue creada con éxito.' }
       else
         format.html { render :new }
