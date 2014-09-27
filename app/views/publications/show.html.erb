@@ -2,6 +2,7 @@
 <div class="page-header">
 <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
+<h3><strong><%= notice %></strong></h3>
 <dl class="dl-horizontal">
 <dt><strong><%= model_class.human_attribute_name(:transaction_type) %>:</strong></dt>
 <dd><%= @publication.transaction_type %></dd>
@@ -26,7 +27,7 @@
 <dt><strong><%= model_class.human_attribute_name(:zone) %>:</strong></dt>
 <dd><%= @publication.zone%></dd>
 <dt><strong><%= model_class.human_attribute_name(:publication_date) %>:</strong></dt>
-<dd><%= @publication.publication_date %></dd>
+<dd><%= @publication.publication_date.strftime("%d %b. %Y") %></dd>
 <dt><strong><%= model_class.human_attribute_name(:publication_attachments) %>:</strong></dt>
 <% @publication.publication_attachments.each do |p| %>
 <%= image_tag p.image_url %>
