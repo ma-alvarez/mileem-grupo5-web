@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :publications
 
   validates :full_name, presence: true
-  validates :full_name, format: { with: /\A[^\s0-9`!@#\$%\^&*+_=-]+\z/,
+  validates :full_name, format: { with: /\A\S[^0-9`!@#\$%\^&*+_=-]+\z/,
     message: "solo permite caracteres alfabéticos y no puede comenzar con un espacio en blanco" } 
   validates :full_name, format: { without: /\s{2}/, 
     message: "no debe contener 2 o más espacios en blanco consecutivos"}
