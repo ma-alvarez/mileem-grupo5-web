@@ -33,8 +33,8 @@ class PublicationsController < ApplicationController
     if @publication.save
       if params[:publication_attachments]
         params[:publication_attachments]['image'].each { |image|
-          if @publication.publication_attachments.count < max
-            @publication.publication_attachments.create!(image: image, publication_id: @publication.id)
+          if @publication.publication_attachments.count < max 
+            @publication.publication_attachments.create(image: image, publication_id: @publication.id)
           else
             error = true
           end  
@@ -58,8 +58,8 @@ class PublicationsController < ApplicationController
     if @publication.update(publication_params)
       if params[:publication_attachments]
         params[:publication_attachments]['image'].each { |image|
-          if @publication.publication_attachments.count < max
-              @publication.publication_attachments.create!(image: image, publication_id: @publication.id)
+          if @publication.publication_attachments.count < max 
+              @publication.publication_attachments.create(image: image, publication_id: @publication.id)
             else
               error = true 
             end
@@ -114,5 +114,9 @@ class PublicationsController < ApplicationController
       elsif relevance = 3
         return 10
       end
+    end
+
+    def format_error
+      flash[:notice] = "No se ha podido agregar la imagén posee un formato incorrecto, formatos permitidos: jpeg,jpg,png"
     end
 end
