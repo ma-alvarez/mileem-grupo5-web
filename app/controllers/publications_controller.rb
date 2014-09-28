@@ -42,7 +42,7 @@ class PublicationsController < ApplicationController
       end
         flash[:notice] = "La publicación fue creado con éxito."
         if error
-          flash[:notice] = "Alguna/s ha/n podido agregar la/s imagen/es usted ha alcanzado el límite permitido por su cuenta: " + max.to_s + "imágenes"
+          flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
         end
         redirect_to @publication
       else
@@ -67,7 +67,7 @@ class PublicationsController < ApplicationController
       end
       flash[:notice] = "La publicación ha sido actualizada"
       if error 
-        flash[:notice] = "No se ha/n podido agregar la/s imagen/es usted ha alcanzado el límite permitido por su cuenta: " + max.to_s + "imágenes"
+       flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
       end
       redirect_to @publication
     else
@@ -107,11 +107,11 @@ class PublicationsController < ApplicationController
     end
 
     def max_attachments(relevance)
-      if relevance = 1
+      if relevance == 1
         return 3
-      elsif relevance = 2
+      elsif relevance == 2
         return 5
-      elsif relevance = 3
+      elsif relevance == 3
         return 10
       end
     end
