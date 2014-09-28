@@ -26,34 +26,34 @@ class PublicationsController < ApplicationController
   # POST /publications
   # POST /publications.json
   def create
-    @publication = current_user.publications.new(publication_params)
+    @publication = current_user.publications.build(publication_params)
     set_relevance(current_user)
-    respond_to do |format|
-      if @publication.save
-        if params[:publication_attachments]
-          params[:publication_attachments]['image'].each do |a|
-            @publication_attachment = 
-              @publication.publication_attachments.create!(:image => a, :publication_id => @publication.id)
-          end
-        end
-        format.html { redirect_to @publication, notice: 'La publicación fue creada con éxito.' }
-      else
-        format.html { render :new }
+    if @publication.save
+      if params[:publication_attachments]
+        params[:publication_attachments]['image'].each { |image|
+          @publication.publication_attachments.create!(image: image, publication_id: @publication.id)
+        }
       end
+        flash[:notice] = "La publicación fue creado con éxito."
+        redirect_to @publication
+      else
+       render :new
     end
   end
 
   # PATCH/PUT /publications/1
   # PATCH/PUT /publications/1.json
   def update
-    respond_to do |format|
-      if @publication.update(publication_params)
-        format.html { redirect_to @publication, notice: 'La publicación fue actualizada con éxito.' }
-        format.json { render :show, status: :ok, location: @publication }
-      else
-        format.html { render :edit }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
+    if @publication.update(publication_params)
+      if params[:publication_attachments]
+        params[:publication_attachments]['image'].each { |image|
+          @publication.publication_attachments.create!(image: image, publication_id: @publication.id)
+        }
       end
+      flash[:notice] = "La publicación ha sido actualizada"
+      redirect_to @publication
+    else
+      render :edit
     end
   end
 

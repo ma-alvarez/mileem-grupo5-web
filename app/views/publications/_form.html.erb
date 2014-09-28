@@ -84,14 +84,9 @@
 		<h3>Imágenes de la publicación</h3>
 	</div>
 	<div class="panel-body">
-		<%= f.fields_for :publication_attachments do |p| %>
-		<div class="field">
-			<%= p.label :image %><br>
-			<%= p.file_field :image, :multiple => true, name: "publication_attachments[image][]" %>
-		</div>
+			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]" %>
 	</div>
-	<% end %>
-	
+
 	<%= f.submit nil, :class => 'btn btn-primary' %>
 	<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
 	publications_path, :class => 'btn btn-default' %>
