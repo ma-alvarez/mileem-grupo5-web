@@ -1,0 +1,7 @@
+<p>Hola <%= @resource.email %>!</p>
+
+<p>Por motivos de seguridad, tu cuenta fue bloqueada porque superaste el límite de intentos para iniciar sesión.</p>
+
+<p>Por favor, ingresa en este enlace para desbloquearla:</p>
+
+<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>

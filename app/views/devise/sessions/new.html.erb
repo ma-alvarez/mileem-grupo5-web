@@ -1,0 +1,46 @@
+<style type="text/css">
+    div.centre {
+      width: 960px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+</style>
+<div class="centre">
+    <h2>Bienvenido a MiLEEM</h2>
+</div>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
+<div class="form-group">
+    <%= f.label :email, class: "col-xs-2 control-label" %>
+    <div class="col-xs-2">
+        <%= f.email_field :email, autofocus: true , class: "form-control" %>
+    </div>
+</div>
+
+<div class="form-group">
+    <%= f.label :password, class: "col-xs-2 control-label" %>
+    <div class="col-xs-2">
+        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+    </div>
+</div>
+
+<% if devise_mapping.rememberable? -%>
+<div class="form-group">
+    <div class="col-xs-2 col-sm-offset-2">
+        <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+    </div>
+</div>
+<% end -%>
+
+<div class="form-group">
+    <div class="col-xs-2 col-sm-offset-2">
+        <%= f.submit "Iniciar sesion", class: 'btn btn-primary' %>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-xs-2 col-sm-offset-2">
+        <%= render "devise/shared/links" %>
+    </div>
+</div>
+<% end %>
