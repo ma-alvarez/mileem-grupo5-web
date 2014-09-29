@@ -26,34 +26,52 @@ class PublicationsController < ApplicationController
   # POST /publications
   # POST /publications.json
   def create
-    @publication = current_user.publications.new(publication_params)
+    error = false
+    @publication = current_user.publications.build(publication_params)
     set_relevance(current_user)
-    #binding.pry
-    respond_to do |format|
-      if @publication.save
-        if params[:publication_attachments]
-          params[:publication_attachments]['image'].each do |a|
-          @publication_attachment = @publication.publication_attachments.create!(:image => a, :publication_id => @publication.id)
+    max = max_attachments(@publication.relevance)
+    if @publication.save
+      if params[:publication_attachments]
+        params[:publication_attachments]['image'].each { |image|
+          if @publication.publication_attachments.count < max 
+            @publication.publication_attachments.create(image: image, publication_id: @publication.id)
+          else
+            error = true
+          end  
+        }
+      end
+        flash[:notice] = "La publicación fue creado con éxito."
+        if error
+          flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
         end
-      end
-       format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
+        redirect_to @publication
       else
-        format.html { render :new }
-      end
+       render :new
     end
   end
 
   # PATCH/PUT /publications/1
   # PATCH/PUT /publications/1.json
   def update
-    respond_to do |format|
-      if @publication.update(publication_params)
-        format.html { redirect_to @publication, notice: 'Publication was successfully updated.' }
-        format.json { render :show, status: :ok, location: @publication }
-      else
-        format.html { render :edit }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
+    error = false
+    max = max_attachments(@publication.relevance)
+    if @publication.update(publication_params)
+      if params[:publication_attachments]
+        params[:publication_attachments]['image'].each { |image|
+          if @publication.publication_attachments.count < max 
+              @publication.publication_attachments.create(image: image, publication_id: @publication.id)
+            else
+              error = true 
+            end
+        }
       end
+      flash[:notice] = "La publicación ha sido actualizada"
+      if error 
+       flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
+      end
+      redirect_to @publication
+    else
+      render :edit
     end
   end
 
@@ -62,7 +80,7 @@ class PublicationsController < ApplicationController
   def destroy
     @publication.destroy
     respond_to do |format|
-      format.html { redirect_to publications_url, notice: 'Publication was successfully destroyed.' }
+      format.html { redirect_to publications_url, notice: 'La publicación fue creada con éxito.' }
       format.json { head :no_content }
     end
   end
@@ -86,5 +104,19 @@ class PublicationsController < ApplicationController
       elsif user.account_type == "Premium"
         @publication.relevance = 3
       end
+    end
+
+    def max_attachments(relevance)
+      if relevance == 1
+        return 3
+      elsif relevance == 2
+        return 5
+      elsif relevance == 3
+        return 10
+      end
+    end
+
+    def format_error
+      flash[:notice] = "No se ha podido agregar la imagén posee un formato incorrecto, formatos permitidos: jpeg,jpg,png"
     end
 end
