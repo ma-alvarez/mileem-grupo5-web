@@ -1,14 +1,4 @@
-<style type="text/css">
-    div.centre {
-      width: 960px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-</style>
-<div class="centre">
-    <h2>Bienvenido a MiLEEM</h2>
-</div>
+<legend>Bienvenido a MiLEEM</legend>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f| %>
 <div class="form-group">
     <%= f.label :email, class: "col-xs-2 control-label" %>

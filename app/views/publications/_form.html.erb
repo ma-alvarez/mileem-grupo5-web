@@ -31,6 +31,10 @@
 				<%= f.label :property_type, class: "control-label" %>
 				<%= f.select(:property_type, Publication::PROPERTY_TYPES, {}, {class: "form-control"}) %>
 			</div>
+				<div class="col-xs-2">
+				<%= f.label :relevance, class: "control-label" %>
+				<%= f.select(:relevance, Publication::ACCOUNT_TYPES, {}, {class: "form-control"}) %>
+			</div>
 		</div>
 		<div class = "row">
 			<div class="col-xs-2">

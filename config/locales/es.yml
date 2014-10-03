@@ -220,12 +220,12 @@ es:
         transaction_type: "Tipo de transacción"
         zone: "Barrio"
         currency: "Moneda"
+        relevance: "Tipo de publicación"
       user:      
         email: "Correo electrónico"
         full_name: "Nombre completo"
         password: "Contraseña"
         password_confirmation: "Confirmar contraseña"
-        account_type: "Tipo de cuenta"
         remember_me: "Recordarme"
       publication_attachment:
         image: "Imágenes"
