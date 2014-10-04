@@ -9,7 +9,6 @@ class CreatePublications < ActiveRecord::Migration
       t.decimal :price
       t.decimal :expenses
       t.integer :age
-      t.string :phone
 
       t.timestamps
     end

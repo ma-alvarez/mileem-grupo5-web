@@ -14,7 +14,7 @@
 <th><%= model_class.human_attribute_name(:price) %></th>
 <th><%= model_class.human_attribute_name(:expenses) %></th>
 <th><%= model_class.human_attribute_name(:age) %></th>
-<th><%= model_class.human_attribute_name(:phone) %></th>
+<th><%= "Téléfono" %></th>
 <th><%= model_class.human_attribute_name(:publication_date) %></th>
 <th><%=t '.actions', :default => t("helpers.actions") %></th>
 </tr>
@@ -30,7 +30,7 @@
 <td><%= publication.currency + publication.price.to_s%></td>
 <td><%= publication.expenses %></td>
 <td><%= publication.age %></td>
-<td><%= publication.phone %></td>
+<td><%= current_user.phone %></td>
 <td><%= publication.publication_date.strftime("%d %b. %Y") %></td>
 <td>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),

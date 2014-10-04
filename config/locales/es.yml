@@ -212,7 +212,6 @@ es:
         expenses: "Expensas"
         name: "Publicación"
         number_of_rooms: "Ambientes"
-        phone: "Teléfono"
         price: "Precio"
         property_type: "Tipo de propiedad"
         publication_date: "Fecha de publicación"
@@ -224,6 +223,7 @@ es:
       user:      
         email: "Correo electrónico"
         full_name: "Nombre completo"
+        phone: "Teléfono"
         password: "Contraseña"
         password_confirmation: "Confirmar contraseña"
         remember_me: "Recordarme"
