@@ -10,7 +10,7 @@ class Publication < ActiveRecord::Base
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
-  CURRENCIES = [['$ (Pesos Argentinos)','$'] ,['US$ (Dólares)', 'US$']]
+  CURRENCIES = [['$ (Pesos Argentinos)','ARS'] ,['US$ (Dólares)', 'US']]
   ACCOUNT_TYPES = [['Free',1],['Basic',2],['Premium',3]]
 
   def publication_date_cannot_be_in_the_past

@@ -17,6 +17,7 @@ module MileemGrupo5Web
     # config.time_zone = 'Central Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+    config.assets.paths << "#{Rails}/vendor/assets/fonts"
     config.i18n.load_path = Dir[Rails.root.join('config', 'locales', '**', '*.yml')]
     config.i18n.default_locale = :es
   end
