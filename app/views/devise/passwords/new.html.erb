@@ -1,23 +1,29 @@
-<h2>¿Olvidaste tu contraseña?</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-horizontal' }) do |f| %>
+<%= stylesheet_link_tag "registration.css" %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {class: 'container'}) do |f| %>
 <%= devise_error_messages! %>
-
-<div class="form-group">
-    <%= f.label :email, class: "col-xs-2 control-label" %>
-    <div class="col-xs-2">
-        <%= f.email_field :email, autofocus: true, class: "form-control" %>
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                 <h3 class="panel-title">¿Olvidaste tu contraseña?</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <%= f.label :email %>
+                            <%= f.email_field :email, autofocus: true, class: "form-control" %>
+                        </div>
+                        <div class="form-group">
+                            <%= f.submit "Reestablecer contraseña", class: 'btn btn-lg btn-success btn-block' %>
+                        </div>
+                        <div class="form-group">
+                            <%= render "devise/shared/links" %>
+                        </div>
+                     </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="form-group">
-    <div class="col-xs-2 col-sm-offset-2">
-        <%= f.submit "Reestablecer contraseña", class: "btn btn-primary" %>
-    </div>
-</div>
-<div class="form-group">
-    <div class="col-xs-2 col-sm-offset-2">
-        <%= render "devise/shared/links" %>
-    </div>
-</div>
 <% end %>
