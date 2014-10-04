@@ -1,16 +1,14 @@
 <%= stylesheet_link_tag "dashboard.css" %>
+<%= render :partial => 'navigation' %>
 <%- model_class = Publication -%>
 <div class="page-header">
-<h1>Publicaciones</h1>
+<h1>Mis Publicaciones</h1>
 </div>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-new_publication_path,
-:class => 'btn btn-primary' %>
 <% @publications.each_slice(2) do |p1, p2| %>
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="row padall">
                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <span></span>
