@@ -11,6 +11,5 @@ class User < ActiveRecord::Base
     message: "solo permite caracteres alfabéticos y no puede comenzar con un espacio en blanco" } 
   validates :full_name, format: { without: /\s{2}/, 
     message: "no debe contener 2 o más espacios en blanco consecutivos"}
-
-  ACCOUNT_TYPES = [['Free',"Free"],['Basic','Basic'],['Premium','Premium']]
+    
 end
