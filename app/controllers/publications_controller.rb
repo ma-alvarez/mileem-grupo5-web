@@ -41,7 +41,7 @@ class PublicationsController < ApplicationController
       end
         flash[:notice] = "La publicación fue creado con éxito."
         if error
-          flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
+          flash[:error] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
         end
         redirect_to @publication
       else
@@ -66,7 +66,7 @@ class PublicationsController < ApplicationController
       end
       flash[:notice] = "La publicación ha sido actualizada"
       if error 
-       flash[:notice] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
+       flash[:error] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
       end
       redirect_to @publication
     else
@@ -79,7 +79,7 @@ class PublicationsController < ApplicationController
   def destroy
     @publication.destroy
     respond_to do |format|
-      format.html { redirect_to publications_url, notice: 'La publicación fue creada con éxito.' }
+      format.html { redirect_to publications_url, notice: 'La publicación ha sido eliminada.' }
       format.json { head :no_content }
     end
   end
@@ -106,6 +106,6 @@ class PublicationsController < ApplicationController
     end
 
     def format_error
-      flash[:notice] = "No se ha podido agregar la imagén posee un formato incorrecto, formatos permitidos: jpeg,jpg,png"
+      flash[:error] = "No se ha podido agregar la imagén posee un formato incorrecto, formatos permitidos: jpeg,jpg,png"
     end
 end
