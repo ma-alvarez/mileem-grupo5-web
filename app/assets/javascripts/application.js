@@ -63,6 +63,11 @@ $(document).on("ready page:change", function() {
       return results[0].address_components[4].short_name;
     }
 
+    function set_latlng(marker) {
+      $("#lat").val(marker.getPosition().lat());
+      $("#lng").val(marker.getPosition().lng());
+    }
+
     function init_map() {
         var myLocation = new google.maps.LatLng(-34.6158526,-58.4332985);
         var mapOptions = {
@@ -77,12 +82,12 @@ $(document).on("ready page:change", function() {
         google.maps.event.addListener(map, 'click', function(e) {
         geocoder.geocode({'latLng':e.latLng}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
-            console.log(results[0].address_components[2].long_name)
             if (results[0]) {
               if (getCity(results) == expectedCity) {
                 placeMarker(e.latLng, map);
                 $('#publication_address').val(getAddress(results));
                 $('#publication_zone').val(results[0].address_components[2].long_name);
+                set_latlng(marker);
               } else 
               alert(invalidAddress);
             }

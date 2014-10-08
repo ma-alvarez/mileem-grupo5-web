@@ -15,4 +15,3 @@ zones = Zone.create([{ name: 'Agronomía'},{ name: 'Almagro'},{ name: 'Balvanera
   { name: 'Villa Crespo'},{ name: 'Villa del Parque'},{ name: 'Villa Devoto'},{ name: 'Villa General Mitre'},{ name: 'Villa Lugano'},{ name: 'Villa Luro'},
   { name: 'Villa Ortúzar'},{ name: 'Villa Pueyrredón'},{ name: 'Villa Real'},{ name: 'Villa Riachuelo'},{ name: 'Villa Santa Rita'},{ name: 'Villa Soldati'},
   { name: 'Villa Urquiza'}])
-
