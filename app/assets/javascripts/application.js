@@ -36,3 +36,60 @@ $(document).on("ready page:change", function() {
 		$.datepicker.setDefaults($.datepicker.regional['es']);
 	  $('.datepicker').datepicker();
 });
+
+ $(document).on("ready page:change", function() {
+    var marker;
+    var geocoder;
+    var expectedCity = 'Ciudad Autónoma de Buenos Aires';
+    var invalidAddress = 'La ubicación que ha seleccionado es inválida, o no pertenece a Ciudad Autónoma de Buenos Aires';
+
+    function placeMarker(location, map) {
+      if ( marker ) {
+        marker.setPosition(location);
+      } else {
+        marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        marker.setMap(map);
+      }
+    }
+
+    function getAddress(results) {
+      return results[0].address_components[1].long_name + " "+ results[0].address_components[0].long_name;
+    }
+
+    function getCity (results) {
+      return results[0].address_components[4].short_name;
+    }
+
+    function init_map() {
+        var myLocation = new google.maps.LatLng(-34.6158526,-58.4332985);
+        var mapOptions = {
+            center: myLocation,
+            streetViewControl: false,
+            zoom: 12
+        };
+
+        geocoder = new google.maps.Geocoder();
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        google.maps.event.addListener(map, 'click', function(e) {
+        geocoder.geocode({'latLng':e.latLng}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results[0].address_components[2].long_name)
+            if (results[0]) {
+              if (getCity(results) == expectedCity) {
+                placeMarker(e.latLng, map);
+                $('#publication_address').val(getAddress(results));
+                $('#publication_zone').val(results[0].address_components[2].long_name);
+              } else 
+              alert(invalidAddress);
+            }
+          }
+          });
+        });
+    }
+    init_map();
+    google.maps.event.addDomListener(window, 'load', initialize);
+  });
