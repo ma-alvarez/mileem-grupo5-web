@@ -5,6 +5,7 @@ class Publication < ActiveRecord::Base
 
   validates :transaction_type, :address, :zone, :price, presence: true
   validates_numericality_of :number_of_rooms, :price, :age, :expenses, :area, greater_than_or_equal_to:0, only_integer:true
+  validates_numericality_of :price, less_than_or_equal_to:1000000000
   validate :publication_date_cannot_be_in_the_past
 
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
