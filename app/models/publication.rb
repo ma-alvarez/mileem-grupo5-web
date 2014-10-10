@@ -19,4 +19,16 @@ class Publication < ActiveRecord::Base
     end
   end
 
+  def type
+    return Publication::ACCOUNT_TYPES[relevance - 1][0]
+  end
+
+  def rooms
+    return Publication::NUMBER_OF_ROOMS[number_of_rooms - 1][0]
+  end
+
+  def init_date
+    return publication_date.strftime("%d/%m/%Y")
+  end
+
 end

@@ -95,6 +95,6 @@ $(document).on("ready page:change", function() {
           });
         });
     }
-    init_map();
-    google.maps.event.addDomListener(window, 'load', initialize);
+    google.maps.event.addDomListener(window, 'load', init_map);
+    google.maps.event.addDomListener(window, 'page:load', init_map);
   });

@@ -49,6 +49,8 @@ gem "pry"
 
 gem "rails-i18n"
 
+gem 'gon'
+
 #Seed Dump is a Rails 4 plugin that adds a rake task named db:seed:dump.
 #It allows you to create seed data files from the existing data in your database.
 #https://github.com/rroblak/seed_dump

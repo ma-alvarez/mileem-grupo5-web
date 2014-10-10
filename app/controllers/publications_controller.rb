@@ -88,6 +88,8 @@ class PublicationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
       @publication = Publication.find(params[:id])
+      gon.lat = @publication.latitude
+      gon.lng = @publication.longitude
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

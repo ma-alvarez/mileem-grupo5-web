@@ -25,12 +25,12 @@
                                 <span class="fa fa-dollar icon"><%= p1.currency %> <%= p1.price %></span>
                             </div>
                             <div class="pull-right">
-                                <%= p1.property_type %> | <%= p1.age %> años | <%= p1.area %> m2 
+                                <%= p1.type %> | <%= p1.init_date %>  
                             </div>
                         </div>
                         <div>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
-                            <h5><%= p1.zone %></h5>
+                            <h5><%= p1.property_type %> | <%= p1.zone %></h5>
                             <%= p1.transaction_type %><span class="fa fa-search icon pull-right"> <%= link_to "Ver detalle", publication_path(p1) %></span>
                         </div>
                     </div>
@@ -56,12 +56,12 @@
                                 <span class="fa fa-dollar icon"><%= p2.currency %> <%= p2.price %></span>
                             </div>
                             <div class="pull-right">
-                               <%= p2.property_type %> | <%= p2.age %> años | <%= p2.area %> m2                               
+                                <%= p2.type %>  | <%= p2.init_date %>                                
                             </div>
                         </div>
                         <div>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p2.address %></h4>
-                            <h5><%= p1.zone %></h5>
+                            <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %><span class="fa fa-search icon pull-right"> <td><%= link_to "Ver detalle", publication_path(p2) %></td></span>
                         </div>
                     </div>
