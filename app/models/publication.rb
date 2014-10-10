@@ -11,7 +11,7 @@ class Publication < ActiveRecord::Base
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
   CURRENCIES = [['$ (Pesos Argentinos)','ARS'] ,['US$ (Dólares)', 'US']]
-  ACCOUNT_TYPES = [['Free',1],['Basic',2],['Premium',3]]
+  ACCOUNT_TYPES = [['Gratuita',1],['Basic',2],['Premium',3]]
 
   def publication_date_cannot_be_in_the_past
     if publication_date.present? && publication_date < Date.today
