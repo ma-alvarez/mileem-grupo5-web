@@ -26,26 +26,35 @@ class PublicationsController < ApplicationController
   # POST /publications
   # POST /publications.json
   def create
-    error = false
     @publication = current_user.publications.build(publication_params)
     max = max_attachments(@publication.relevance)
-    if @publication.save
+    error = false
+    if @publication.valid?
       if params[:publication_attachments]
-        params[:publication_attachments]['image'].each { |image|
-          if @publication.publication_attachments.count < max 
+        if params[:publication_attachments]['image'].count <= max 
+            @publication.save
+            params[:publication_attachments]['image'].each { |image|
             @publication.publication_attachments.create(image: image, publication_id: @publication.id)
-          else
-            error = true
-          end  
-        }
-      end
-        flash[:notice] = "La publicación fue creado con éxito."
-        if error
-          flash[:error] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
+          }
+        else
+          error = true
+          # flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes"
         end
+      end
+      if !error 
+        flash[:notice] = "La publicación fue creado con éxito."
         redirect_to @publication
       else
-       render :new
+        flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes"
+        render :new
+      end
+    else
+      if params[:publication_attachments]
+        if params[:publication_attachments]['image'].count > max
+          flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes" 
+        end
+      end
+      render :new
     end
   end
 
