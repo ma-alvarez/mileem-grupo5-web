@@ -40,6 +40,8 @@ class PublicationsController < ApplicationController
           error = true
           # flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes"
         end
+      else
+        @publication.save
       end
       if !error 
         flash[:notice] = "La publicación fue creado con éxito."
