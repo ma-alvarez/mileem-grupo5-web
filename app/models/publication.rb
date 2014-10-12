@@ -12,7 +12,7 @@ class Publication < ActiveRecord::Base
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
   CURRENCIES = [['$ (Pesos Argentinos)','ARS'] ,['US$ (Dólares)', 'US']]
-  ACCOUNT_TYPES = [['Gratuita',1],['Basic',2],['Premium',3]]
+  ACCOUNT_TYPES = [['Gratuita',1],['Básica',2],['Premium',3]]
 
   def publication_date_cannot_be_in_the_past
     if publication_date.present? && publication_date < Date.today
@@ -30,6 +30,28 @@ class Publication < ActiveRecord::Base
 
   def init_date
     return publication_date.strftime("%d/%m/%Y")
+  end
+
+  def determinate_payment
+    if relevance == 1
+      self.paid = true
+    else
+      self.paid = false
+    end  
+  end
+
+  def determinate_active
+    self.active = (paid && self.publication_date == Date.today)
+  end
+
+  def determinate_expiration
+    if relevance == 1
+      return self.expiration_date = self.publication_date + 1.months
+    elsif relevance == 2
+      return self.expiration_date = self.publication_date + 3.months
+    elsif relevance == 3
+      return self.expiration_date = self.publication_date + 12.months
+    end
   end
 
 end

@@ -29,6 +29,15 @@
                             </div>
                         </div>
                         <div>
+                            <%- if !p1.paid %>
+                                <span class="label label-danger pull-right">Pago pendiente</span>
+                            <% end -%>
+                            <%- if p1.paid && !p1.active %>
+                                <span class="label label-primary pull-right">Lista para publicar</span>
+                            <% end -%>
+                            <%- if p1.active %>
+                                <span class="label label-success pull-right">Activa</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
                             <h5><%= p1.property_type %> | <%= p1.zone %></h5>
                             <%= p1.transaction_type %><span class="fa fa-search icon pull-right"> <%= link_to "Ver detalle", publication_path(p1) %></span>
@@ -60,6 +69,15 @@
                             </div>
                         </div>
                         <div>
+                            <%- if !p2.paid %>
+                                <span class="label label-danger pull-right">Pago pendiente</span>
+                            <% end -%>
+                            <%- if p2.paid && !p2.active %>
+                                <span class="label label-primary pull-right">Listo para publicar</span>
+                            <% end -%>
+                            <%- if p2.active %>
+                                <span class="label label-success pull-right">Activa</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p2.address %></h4>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %><span class="fa fa-search icon pull-right"> <td><%= link_to "Ver detalle", publication_path(p2) %></td></span>

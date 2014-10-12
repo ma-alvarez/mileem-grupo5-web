@@ -28,6 +28,9 @@ class PublicationsController < ApplicationController
   def create
     @publication = current_user.publications.build(publication_params)
     max = max_attachments(@publication.relevance)
+    @publication.determinate_payment
+    @publication.determinate_active
+    @publication.determinate_expiration
     error = false
     if @publication.valid?
       if params[:publication_attachments]
@@ -105,7 +108,7 @@ class PublicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publication_params
-      params.require(:publication).permit(:transaction_type, :property_type, :address, :latitude, :longitude, :area, :zone, :publication_date, :number_of_rooms, :price, :expenses, :age, :currency, :relevance, publication_attachments_attributes: [:id, :publication_id, :image])
+      params.require(:publication).permit(:transaction_type, :property_type, :address, :latitude, :longitude, :area, :zone, :publication_date, :number_of_rooms, :price, :expenses, :age, :currency, :relevance, :paid, :active,:expiration_date, publication_attachments_attributes: [:id, :publication_id, :image])
     end
 
     def max_attachments(relevance)
