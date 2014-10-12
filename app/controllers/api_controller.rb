@@ -111,7 +111,8 @@ class ApiController < ApplicationController
     offsetSentence = (((params['page'].to_i) -1) * (params['count'].to_i))
 
     @publications = Publication.where(opFiltersHash).order(orderSentence).limit(limitSentence).offset(offsetSentence)
-    respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
+    respond_with @publications.as_json( include: 
+      {user: {:only => [:email, :phone]}, publication_attachments: {only: :image}})
   end
 
 end
