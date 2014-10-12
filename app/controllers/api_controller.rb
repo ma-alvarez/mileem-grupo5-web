@@ -69,6 +69,9 @@ class ApiController < ApplicationController
       opFiltersHash[:number_of_rooms] = params[:rooms]
     end
 
+    #Sólo se muestran las publicaciones activas
+    opFiltersHash[:active] = true
+    
     #Fecha de publicación (pubtimefrom y pubtimeto, opcionales)
     #Sólo se enviaran las publicaciones cuya fecha de publicación no superen a la fecha actual.
     minPossibleDate = "1800-01-01".to_date
