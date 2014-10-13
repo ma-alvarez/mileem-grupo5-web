@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -47,6 +48,8 @@ gem 'twitter-bootswatch-rails-helpers'
 gem "pry"
 
 gem "rails-i18n"
+
+gem 'gon'
 
 #Seed Dump is a Rails 4 plugin that adds a rake task named db:seed:dump.
 #It allows you to create seed data files from the existing data in your database.

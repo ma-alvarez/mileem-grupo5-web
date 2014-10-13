@@ -1,18 +1,14 @@
+<%= stylesheet_link_tag "dashboard.css" %>
 <%= form_for @publication, :html => { :class => "form-horizontal publication" } do |f| %>
 <% if @publication.errors.any? %>
-	<div id="error_expl" class="panel panel-danger">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				<%= @publication.errors.count %> errores impiden que la publicación sea guardada:</h3>
-		</div>
-		<div class="panel-body">
+		<div class="alert alert-danger">
+			<a href="#" class="close" data-dismiss="alert">&times;</a>
 			<ul>
 				<% @publication.errors.full_messages.each do |msg| %>
 				<li><%= msg %></li>
 				<% end %>
 			</ul>
 		</div>
-	</div>
 <% end %>
 	<div class="panel-heading">
 		<h3>Datos de la Publicación</h3>
@@ -21,15 +17,11 @@
 		<div class="row">
 			<div class="col-xs-2">
 				<%= f.label :publication_date, class: "control-label" %>
-				<%= f.date_select :publication_date, {}, class: "form-control" %>
+				<%= f.text_field :publication_date, class: "datepicker form-control", readonly:true, style:"background:white;cursor:default;" %>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :transaction_type, class: "control-label" %>
 				<%= f.select(:transaction_type, Publication::TRANSACTION_TYPES, {}, {class: "form-control"}) %>
-			</div>
-			<div class="col-xs-2">
-				<%= f.label :property_type, class: "control-label" %>
-				<%= f.select(:property_type, Publication::PROPERTY_TYPES, {}, {class: "form-control"}) %>
 			</div>
 				<div class="col-xs-2">
 				<%= f.label :relevance, class: "control-label" %>
@@ -56,16 +48,6 @@
 	</div>
 	<div class="panel-body">
 		<div class = "row">
-			<div class="col-xs-3">
-				<%= f.label :address, class: "control-label" %>
-				<%= f.text_field :address, class: "form-control"%>
-			</div>
-			<div class="col-xs-2">
-				<%= f.label :zone, class: "control-label" %>
-				<%= f.collection_select(:zone, Zone.all, :name, :name, {}, {class: "form-control"}) %>
-			</div>
-		</div>
-		<div class = "row">
 			<div class="col-xs-1">
 				<%= f.label :age, class: "control-label" %>
 				<%= f.text_field :age, class: "form-control"%>
@@ -78,16 +60,40 @@
 				<%= f.label :number_of_rooms, class: "control-label" %>
 				<%= f.select(:number_of_rooms, Publication::NUMBER_OF_ROOMS, {}, {class: "form-control"}) %>
 			</div>
+			<div class="col-xs-2">
+				<%= f.label :property_type, class: "control-label" %>
+				<%= f.select(:property_type, Publication::PROPERTY_TYPES, {}, {class: "form-control"}) %>
+			</div>
 		</div>
 	</div>
+	<div class="panel-heading">
+		<h3>Ubicación del inmueble</h3>
+		<h4>Selecciona en el mapa tu ubicación para obtener la dirección</h4>
+	</div>
+	<div class="panel-body">
+		<div class = "row">
+			<div class="col-xs-3">
+				<%= f.label :address, class: "control-label" %>
+				<%= f.text_field :address, class: "form-control", readonly:true %>
+			</div>
+			<div class="col-xs-2">
+				<%= f.label :zone, class: "control-label" %>
+				<%= f.collection_select(:zone, Zone.all, :name, :name, {}, {class: "form-control"}) %>
+			</div>
+		</div>
+		<div style='width: 800px;'>
+		  <div id="map" style='width: 800px; height: 500px; margin-top:25px;'></div>
+		</div>
+	</div>
+	<%= f.hidden_field :latitude, :id => "lat" %>
+  <%= f.hidden_field :longitude, :id => "lng" %>
 	<div class="panel-heading">
 		<h3>Imágenes de la publicación</h3>
 	</div>
 	<div class="panel-body">
 			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]" %>
 	</div>
-
 	<%= f.submit nil, :class => 'btn btn-primary' %>
 	<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
 	publications_path, :class => 'btn btn-default' %>
-	<% end %>
+<% end %>

@@ -25,18 +25,23 @@
                                 <span class="fa fa-dollar icon"><%= p1.currency %> <%= p1.price %></span>
                             </div>
                             <div class="pull-right">
-                                <%= p1.property_type %> | <%= p1.age %> años | <%= p1.area %> m2 
+                                <%= p1.type %> | <%= p1.init_date %>  
                             </div>
                         </div>
                         <div>
+                            <%- if !p1.paid %>
+                                <span class="label label-danger pull-right">Pago pendiente</span>
+                            <% end -%>
+                            <%- if p1.paid && !p1.active %>
+                                <span class="label label-primary pull-right">Lista para publicar</span>
+                            <% end -%>
+                            <%- if p1.active %>
+                                <span class="label label-success pull-right">Activa</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
-                            <h5><%= p1.zone %></h5>
+                            <h5><%= p1.property_type %> | <%= p1.zone %></h5>
                             <%= p1.transaction_type %><span class="fa fa-search icon pull-right"> <%= link_to "Ver detalle", publication_path(p1) %></span>
                         </div>
-                    </div>
-                </div>
-                <div class="row padbig">
-                    <div id="map1" class="map">
                     </div>
                 </div>
             </div>
@@ -60,18 +65,23 @@
                                 <span class="fa fa-dollar icon"><%= p2.currency %> <%= p2.price %></span>
                             </div>
                             <div class="pull-right">
-                               <%= p2.property_type %> | <%= p2.age %> años | <%= p2.area %> m2                               
+                                <%= p2.type %>  | <%= p2.init_date %>                                
                             </div>
                         </div>
                         <div>
+                            <%- if !p2.paid %>
+                                <span class="label label-danger pull-right">Pago pendiente</span>
+                            <% end -%>
+                            <%- if p2.paid && !p2.active %>
+                                <span class="label label-primary pull-right">Listo para publicar</span>
+                            <% end -%>
+                            <%- if p2.active %>
+                                <span class="label label-success pull-right">Activa</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p2.address %></h4>
-                            <h5><%= p1.zone %></h5>
+                            <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %><span class="fa fa-search icon pull-right"> <td><%= link_to "Ver detalle", publication_path(p2) %></td></span>
                         </div>
-                    </div>
-                </div>
-                <div class="row padbig">
-                    <div id="map2" class="map">
                     </div>
                 </div>
             </div>
@@ -80,55 +90,3 @@
     </div>
   </div>
 <% end %>
-
-<!-- 
-<%- model_class = Publication -%>
-<div class="page-header">
-<h1>Publicaciones</h1>
-</div>
-<%= notice %>
-<table class="table table-striped">
-<thead>
-<tr>
-<th><%= model_class.human_attribute_name(:transaction_type) %></th>
-<th><%= model_class.human_attribute_name(:property_type) %></th>
-<th><%= model_class.human_attribute_name(:address) %></th>
-<th><%= model_class.human_attribute_name(:area) %></th>
-<th><%= model_class.human_attribute_name(:number_of_rooms) %></th>
-<th><%= model_class.human_attribute_name(:price) %></th>
-<th><%= model_class.human_attribute_name(:expenses) %></th>
-<th><%= model_class.human_attribute_name(:age) %></th>
-<th><%= "Téléfono" %></th>
-<th><%= model_class.human_attribute_name(:publication_date) %></th>
-<th><%=t '.actions', :default => t("helpers.actions") %></th>
-</tr>
-</thead>
-<tbody>
-<% @publications.each do |publication| %>
-<tr>
-<td><%= link_to publication.transaction_type, publication_path(publication) %></td>
-<td><%= publication.property_type %></td>
-<td><%= publication.address %></td>
-<td><%= publication.area %></td>
-<td><%= publication.number_of_rooms %></td>
-<td><%= publication.currency + publication.price.to_s%></td>
-<td><%= publication.expenses %></td>
-<td><%= publication.age %></td>
-<td><%= current_user.phone %></td>
-<td><%= publication.publication_date.strftime("%d %b. %Y") %></td>
-<td>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-edit_publication_path(publication), :class => 'btn btn-default btn-xs' %>
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-publication_path(publication),
-:method => :delete,
-:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-:class => 'btn btn-xs btn-danger' %>
-</td>
-</tr>
-<% end %>
-</tbody>
-</table>
-<%= link_to t('.new', :default => t("helpers.links.new")),
-new_publication_path,
-:class => 'btn btn-primary' %> -->
