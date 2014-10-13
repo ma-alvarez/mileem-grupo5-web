@@ -3,21 +3,24 @@ user_free = User.create!(
 			email: 'mileemfree@mileem.com', 
       password: 'mileemfree', 
       password_confirmation: 'mileemfree',
-      phone: "1569886541")
+      phone: "1569886541",
+      confirmed_at: Time.now)
 
 user_basic = User.create!(
 			full_name: 'Mileem Basic',
 			email: 'mileembasic@mileem.com', 
       password: 'mileembasic', 
       password_confirmation: 'mileembasic',
-      phone: "1569886542")
+      phone: "1569886542",
+      confirmed_at: Time.now)
 
 user_premium = User.create!(
 			full_name: 'Mileem Premium',
 			email: 'mileempremium@mileem.com', 
       password: 'mileempremium', 
       password_confirmation: 'mileempremium',
-      phone: "1569886543")
+      phone: "1569886543",
+      confirmed_at: Time.now)
 
 Publication.create!([
   {transaction_type: "Compra", property_type: "Casa", address: "Direccion free user propiedad 1", area: 150, number_of_rooms: 1, price: 2100000, expenses: 0, age: 5, user_id: user_free.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: "Agronomía", relevance: 1, currency: "ARS"},
