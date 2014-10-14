@@ -4,6 +4,25 @@ Rails.application.routes.draw do
   root :to => "publications#index"
   get '/allpublications', to: 'api#all_publications', via: [:get]
   get '/filterpublications', to: 'api#filter_publications', via: [:get]
+
+  resources :publications do
+    member do
+      post 'publicate'
+    end
+  end
+
+  resources :publications do
+    member do
+      post 'pause'
+    end
+  end
+
+  resources :publications do
+    member do
+      post 'unpause'
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

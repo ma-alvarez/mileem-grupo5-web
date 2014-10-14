@@ -28,6 +28,7 @@ class PublicationsController < ApplicationController
   def create
     @publication = current_user.publications.build(publication_params)
     max = max_attachments(@publication.relevance)
+    @publication.init_publication
     @publication.determinate_payment
     @publication.determinate_active
     @publication.determinate_expiration
@@ -96,6 +97,34 @@ class PublicationsController < ApplicationController
       format.html { redirect_to publications_url, notice: 'La publicación ha sido eliminada.' }
       format.json { head :no_content }
     end
+  end
+
+  def publicate
+    set_publication
+    @publication.publicate
+    @publication.save
+    redirect_to publications_path
+  end
+
+  def pause
+    set_publication
+    if @publication.pause_counter < 3
+      @publication.pause
+      @publication.save
+      redirect_to publications_path
+      flash[:notice] = "Te quedan " + @publication.remaining_days.to_s + " días, a partir de cuando reactives tu publicación"
+    else
+      redirect_to publications_path
+      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límites de 3 pausas."
+    end
+  end
+
+  def unpause
+    set_publication
+    @publication.unpause
+    @publication.save
+    redirect_to publications_path
+     flash[:notice] = "Te quedan " + @publication.remaining_pauses.to_s + " pausas disponibles"
   end
 
   private

@@ -6,7 +6,6 @@ class Publication < ActiveRecord::Base
   validates :transaction_type, :address, :zone, :price, presence: true
   validates_numericality_of :number_of_rooms, :price, :age, :expenses, :area, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :price, less_than_or_equal_to:1000000000
-  validate :publication_date_cannot_be_in_the_past
 
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
@@ -14,22 +13,64 @@ class Publication < ActiveRecord::Base
   CURRENCIES = [['$ (Pesos Argentinos)','ARS'] ,['US$ (Dólares)', 'US']]
   ACCOUNT_TYPES = [['Gratuita',1],['Básica',2],['Premium',3]]
 
-  def publication_date_cannot_be_in_the_past
-    if publication_date.present? && publication_date < Date.today
-      errors.add(:publication_date, " debe ser mayor o igual a la fecha actual.")
-    end
-  end
-
   def type
-    return Publication::ACCOUNT_TYPES[relevance - 1][0]
+     Publication::ACCOUNT_TYPES[relevance - 1][0]
   end
 
   def rooms
-    return Publication::NUMBER_OF_ROOMS[number_of_rooms - 1][0]
+     Publication::NUMBER_OF_ROOMS[number_of_rooms - 1][0]
   end
 
   def init_date
-    return publication_date.strftime("%d/%m/%Y")
+    publication_date.strftime("%d/%m/%Y")
+  end
+
+  def init_publication
+    self.pause_counter = 0
+    self.remaining_days = 0
+  end
+
+  def expiration
+    expiration_date.strftime("%d/%m/%Y")
+  end
+
+  def missing_pay?
+    !paid && !active
+  end
+
+  def enable_to_publish?
+    paid && !active && Date.today < publication_date
+  end
+
+  def active?
+    paid && active
+  end
+
+  def paused?
+    paid && !active && remaining_days > 0
+  end
+
+  def finished?
+    paid && !active && expiration_date <= Date.today && remaining_days == 0
+  end
+
+  def publicate
+    self.active = true
+    self.publication_date = Date.today
+    determinate_expiration
+  end
+
+  def pause
+    self.active = false
+    self.pause_counter = self.pause_counter + 1
+    self.remaining_days = (expiration_date - Date.today).to_i
+  end
+
+
+  def unpause
+    self.active = true
+    self.expiration_date = Date.today + self.remaining_days.days
+    self.remaining_days = 0
   end
 
   def determinate_payment
@@ -52,6 +93,10 @@ class Publication < ActiveRecord::Base
     elsif relevance == 3
       return self.expiration_date = self.publication_date + 12.months
     end
+  end
+
+  def remaining_pauses
+    3 - self.pause_counter
   end
 
 end

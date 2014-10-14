@@ -12,7 +12,7 @@
                     <div class="panel-body text-center">
                         <h3>Tipo: <%= @publication.type %></h3>
                         <h3>Fecha de inicio de la publicación: <%= @publication.init_date %></h3>
-                        <h3>Vence el:</h3>
+                        <h3>Vence el: <%= @publication.expiration%></h3>
                         <div>  
                             <h3>Tipo de transacción: <%=@publication.transaction_type %>                
                             <h3>Precio: $<%= @publication.currency%> <%= @publication.price%></h3>  

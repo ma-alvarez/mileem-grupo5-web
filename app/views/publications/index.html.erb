@@ -16,7 +16,7 @@
                          <%= image_tag 'noimage.jpg' %>
                         <% end -%>
                         <%- if p1.publication_attachments.first %>
-                         <%= image_tag p1.publication_attachments.first.image_url %>
+                         <%= image_tag p1.publication_attachments.first.image_url%>
                         <% end -%>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
@@ -29,17 +29,32 @@
                             </div>
                         </div>
                         <div>
-                            <%- if !p1.paid %>
+                            <%- if p1.missing_pay? %>
                                 <span class="label label-danger pull-right">Pago pendiente</span>
                             <% end -%>
-                            <%- if p1.paid && !p1.active %>
+                            <%- if p1.enable_to_publish? %>
                                 <span class="label label-primary pull-right">Lista para publicar</span>
                             <% end -%>
-                            <%- if p1.active %>
+                            <%- if p1.active? %>
                                 <span class="label label-success pull-right">Activa</span>
                             <% end -%>
+                            <%- if p1.finished? %>
+                                <span class="label label-default pull-right">Finalizada</span>
+                            <% end -%>
+                            <%- if p1.paused? %>
+                                <span class="label label-warning pull-right">Pausada</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
-                            <h5><%= p1.property_type %> | <%= p1.zone %></h5>
+                            <%- if p1.enable_to_publish? %>
+                                    <%=button_to "Publicar",[:publicate, p1], class: "btn btn-success btn-xs pull-right" %>
+                            <% end -%>
+                            <%- if p1.active? %>
+                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro que desea pausar su publicación?'},class: "btn btn-warning btn-xs pull-right" %>
+                            <% end -%>
+                            <%- if p1.paused? %>
+                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro que desea reactivar su publicación?'}, class: "btn btn-success btn-xs pull-right" %>
+                            <% end -%>
+                            <h5><%= p1.property_type %> | <%= p1.zone %></h5> 
                             <%= p1.transaction_type %><span class="fa fa-search icon pull-right"> <%= link_to "Ver detalle", publication_path(p1) %></span>
                         </div>
                     </div>
@@ -69,16 +84,31 @@
                             </div>
                         </div>
                         <div>
-                            <%- if !p2.paid %>
+                            <%- if p2.missing_pay? %>
                                 <span class="label label-danger pull-right">Pago pendiente</span>
                             <% end -%>
-                            <%- if p2.paid && !p2.active %>
+                            <%- if p2.enable_to_publish? %>
                                 <span class="label label-primary pull-right">Listo para publicar</span>
                             <% end -%>
-                            <%- if p2.active %>
+                            <%- if p2.active? %>
                                 <span class="label label-success pull-right">Activa</span>
                             <% end -%>
+                            <%- if p2.finished? %>
+                                <span class="label label-default pull-right">Finalizada</span>
+                            <% end -%>
+                            <%- if p2.paused? %>
+                                <span class="label label-warning pull-right">Pausada</span>
+                            <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p2.address %></h4>
+                            <%- if p2.enable_to_publish? %>
+                               <%=button_to "Publicar",[:publicate, p2], class: "btn btn-success btn-xs pull-right" %>
+                            <% end -%>
+                            <%- if p2.active? %>
+                               <%=button_to "Pausar",[:pause, p2], class: "btn btn-warning btn-xs pull-right" %>
+                            <% end -%>
+                            <%- if p2.paused? %>
+                               <%=button_to "Reactivar",[:unpause, p2], class: "btn btn-success btn-xs pull-right" %>
+                            <% end -%>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %><span class="fa fa-search icon pull-right"> <td><%= link_to "Ver detalle", publication_path(p2) %></td></span>
                         </div>
