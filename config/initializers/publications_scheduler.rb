@@ -16,6 +16,7 @@ scheduler.every '30s' do
 	#Activate inactive publications whose publication date is today.
 	activationHash = { }
 	activationHash[:active] = false
+	activationHash[:paid] = true
 	activationHash[:publication_date] = Date.today..Date.today
 	@publicationsToActivate = Publication.where(activationHash)
 	@publicationsToActivate.all.each do |eachPublicationToActivate|
