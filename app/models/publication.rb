@@ -6,6 +6,10 @@ class Publication < ActiveRecord::Base
   validates :transaction_type, :address, :zone, :price, presence: true
   validates_numericality_of :number_of_rooms, :price, :age, :expenses, :area, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :price, less_than_or_equal_to:1000000000
+  validates_numericality_of :age, less_than_or_equal_to:1000
+  validates_numericality_of :expenses, less_than_or_equal_to:100000
+  validates_numericality_of :area, less_than_or_equal_to:100000
+
 
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
