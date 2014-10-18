@@ -56,6 +56,8 @@ gem 'gon'
 #https://github.com/rroblak/seed_dump
 gem 'seed_dump'
 
+gem "rufus-scheduler"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

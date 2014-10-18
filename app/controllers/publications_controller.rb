@@ -5,7 +5,34 @@ class PublicationsController < ApplicationController
   # GET /publications
   # GET /publications.json
   def index
-    @publications = current_user.publications
+    if params.has_value?("Buscar")
+      filter_hash = {}
+      first_date = "2014-01-01".to_date
+      last_date = "2100-01-01".to_date
+      first_date = params[:first_date].to_date if !params[:first_date].blank?
+      last_date = params[:last_date].to_date if !params[:last_date].blank?
+      filter_hash[:publication_date] = first_date..last_date
+      @publications = current_user.publications.where(filter_hash)
+      if !params[:status].blank?
+        if params[:status] == 'active'
+          @publications = Publication.active_publications(@publications)
+        end
+        if params[:status] == 'missing_pay'
+          @publications = Publication.missing_pay_publications(@publications)
+        end
+        if params[:status] == 'enable_to_publish'
+          @publications = Publication.enable_to_publish_publications(@publications)
+        end
+        if params[:status] == 'paused'
+          @publications = Publication.paused_publications(@publications)
+        end
+        if params[:status] == 'finished'
+          @publications = Publication.finished_publications(@publications)
+        end
+      end 
+    else
+      @publications = current_user.publications
+    end
   end
 
   # GET /publications/1
@@ -28,6 +55,7 @@ class PublicationsController < ApplicationController
   def create
     @publication = current_user.publications.build(publication_params)
     max = max_attachments(@publication.relevance)
+    @publication.init_publication
     @publication.determinate_payment
     @publication.determinate_active
     @publication.determinate_expiration
@@ -96,6 +124,34 @@ class PublicationsController < ApplicationController
       format.html { redirect_to publications_url, notice: 'La publicación ha sido eliminada.' }
       format.json { head :no_content }
     end
+  end
+
+  def publicate
+    set_publication
+    @publication.publicate
+    @publication.save
+    redirect_to publications_path
+  end
+
+  def pause
+    set_publication
+    if @publication.pause_counter < 3
+      @publication.pause
+      @publication.save
+      redirect_to publications_path
+      flash[:notice] = "Te quedan " + @publication.remaining_days.to_s + " días, a partir de cuando reactives tu publicación"
+    else
+      redirect_to publications_path
+      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límites de 3 pausas."
+    end
+  end
+
+  def unpause
+    set_publication
+    @publication.unpause
+    @publication.save
+    redirect_to publications_path
+     flash[:notice] = "Te quedan " + @publication.remaining_pauses.to_s + " pausas disponibles"
   end
 
   private

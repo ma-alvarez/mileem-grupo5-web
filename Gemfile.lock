@@ -114,6 +114,8 @@ GEM
       json (~> 1.4)
     ref (1.0.5)
     request_store (1.1.0)
+    rufus-scheduler (3.0.9)
+      tzinfo
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -183,6 +185,7 @@ DEPENDENCIES
   pry
   rails (= 4.1.5)
   rails-i18n
+  rufus-scheduler
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   seed_dump
