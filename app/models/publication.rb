@@ -3,14 +3,13 @@ class Publication < ActiveRecord::Base
   has_many :publication_attachments, :inverse_of => :publication, :dependent => :destroy
   accepts_nested_attributes_for :publication_attachments, allow_destroy: true
 
-  validates :transaction_type, :address, :zone, :price, presence: true
+  validates :transaction_type, :address, :zone, :price, :publication_date, presence: true
   validates_numericality_of :number_of_rooms, :price, :age, :expenses, :area, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :price, less_than_or_equal_to:1000000000
   validates_numericality_of :age, less_than_or_equal_to:1000
   validates_numericality_of :expenses, less_than_or_equal_to:100000
   validates_numericality_of :area, less_than_or_equal_to:100000
-
-
+  
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
@@ -26,12 +25,16 @@ class Publication < ActiveRecord::Base
   def rooms
      Publication::NUMBER_OF_ROOMS[number_of_rooms - 1][0]
   end
-
+  
   def init_date
     publication_date.strftime("%d/%m/%Y")
   end
 
   def init_publication
+    self.publication_date = Date.today.strftime("%d/%m/%Y")
+  end
+
+  def init_pausing_values
     self.pause_counter = 0
     self.remaining_days = 0
   end

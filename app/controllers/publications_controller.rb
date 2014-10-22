@@ -43,6 +43,7 @@ class PublicationsController < ApplicationController
   # GET /publications/new
   def new
     @publication = current_user.publications.new
+    @publication.init_publication
     @publication_attachment = @publication.publication_attachments.build
   end
 
@@ -55,7 +56,7 @@ class PublicationsController < ApplicationController
   def create
     @publication = current_user.publications.build(publication_params)
     max = max_attachments(@publication.relevance)
-    @publication.init_publication
+    @publication.init_pausing_values
     @publication.determinate_payment
     @publication.determinate_active
     @publication.determinate_expiration
