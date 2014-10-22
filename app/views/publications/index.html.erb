@@ -1,8 +1,14 @@
 <%= stylesheet_link_tag "dashboard.css" %>
 <%= render :partial => 'navigation' %>
 <%- model_class = Publication -%>
-<div class="page-header">
-    <h1>Mis Publicaciones</h1>
+<div class="page-header" style="margin-top:10px">
+    <div class="row">
+        <div class ="panel-body">
+            <div class ="col-sm-4">
+            <h1>Mis Publicaciones</h1>
+            </div>
+        </div>
+    </div>
 <%= form_tag '', :method => :get do %>
 <div class="row">
 <div class="panel-body">
