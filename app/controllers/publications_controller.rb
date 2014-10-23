@@ -57,7 +57,7 @@ class PublicationsController < ApplicationController
     max = max_attachments(@publication.relevance)
     error = false
     if @publication.valid?
-      @publication.init_pausing_values
+      @publication.init_publication
       @publication.determinate_payment
       @publication.determinate_active
       @publication.determinate_expiration
