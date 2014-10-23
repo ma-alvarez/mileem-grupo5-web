@@ -26,7 +26,13 @@
             <div class="panel panel-default">
                 <div class="text-center header">Imágenes</div>
                 <%- if !@publication.publication_attachments.empty? %>
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">                 
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <% @publication.publication_attachments.drop(1).each do |image| %>
+                         <li data-target="#carousel-example-generic" data-slide-to="#{image.index}"></li>
+                        <% end %>
+                      </ol>                 
                       <div class="carousel-inner">
                         <div class="item active">
                             <%= image_tag @publication.publication_attachments.first.image_url, style:"width:640px;height:360px" %>    
