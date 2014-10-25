@@ -114,7 +114,7 @@ $(document).on("ready page:change", function() {
   });
 
 
-$(document).ready(function(){
+$(document).on("ready page:change", function() {
      if($('#publication_relevance').val() == 1){
         $("#publication_video_link").attr('disabled','disabled');
         $("#publication_video_link").val('');
