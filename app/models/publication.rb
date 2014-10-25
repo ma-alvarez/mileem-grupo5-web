@@ -2,8 +2,12 @@ class Publication < ActiveRecord::Base
   belongs_to :user
   has_many :publication_attachments, :inverse_of => :publication, :dependent => :destroy
   accepts_nested_attributes_for :publication_attachments, allow_destroy: true
+  YT_LINK_FORMAT = /\A.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i
+ 
 
   validates :transaction_type, :address, :zone, :price, :publication_date, presence: true
+  validates :video_link, allow_blank: true, format: { with: YT_LINK_FORMAT,
+    message:"no posee el formato correcto o no pertenece a Youtube"}
   validates_numericality_of :number_of_rooms, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :price, less_than_or_equal_to:1000000000, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :age, less_than_or_equal_to:1000, greater_than_or_equal_to:0, only_integer:true
