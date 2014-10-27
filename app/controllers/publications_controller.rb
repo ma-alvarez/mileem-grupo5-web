@@ -154,6 +154,14 @@ class PublicationsController < ApplicationController
      flash[:notice] = "Te quedan " + @publication.remaining_pauses.to_s + " pausas disponibles"
   end
 
+  def pay
+    set_publication
+    @publication.pay
+    @publication.determinate_active
+    @publication.save
+    redirect_to publications_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_publication

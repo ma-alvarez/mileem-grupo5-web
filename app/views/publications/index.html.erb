@@ -78,6 +78,11 @@
                             <%- if p1.active? %>
                                <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro que desea pausar su publicación?'},class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
+                            <%- if p1.missing_pay? %>
+                                <button onclick="window.idToPay = <%= p1.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                    Pagar
+                                </button>
+                            <% end -%>
                             <%- if p1.paused? %>
                                <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
@@ -135,6 +140,11 @@
                             <%- if p2.active? %>
                                <%=button_to "Pausar",[:pause, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
+                            <%- if p2.missing_pay? %>
+                                <button onclick="window.idToPay = <%= p2.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                    Pagar
+                                </button>
+                            <% end -%>
                             <%- if p2.paused? %>
                                <%=button_to "Reactivar",[:unpause, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
@@ -151,6 +161,78 @@
     </div>
   </div>
 <% end %>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Pago de publicación</h4>
+      </div>
+      <div class="modal-body">
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="card" class="col-sm-3 control-label">Tarjeta</label>
+    <div class="col-sm-8">
+        <input type="text" class="form-control" id="cc_type" readonly="true">
+    </div>
+  </div>
+  <div class="form-group" id="cc_number_field">
+    <label for="cc_number" class="col-sm-3 control-label">Nro. de tarjeta</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="cc_number" placeholder="Nro. de tarjeta">
+    </div>
+  </div>
+  <div class="form-group" id="expiration_field">
+    <label for="card" class="col-sm-3 control-label">Fecha de vencimiento</label>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" id="expiration">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="full_name" class="col-sm-3 control-label">Nombre completo</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" id="full_name" placeholder="Nombre y apellido">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="card" class="col-sm-3 control-label">Documento</label>
+    <div class="col-sm-3">
+        <select id="document_type" class="form-control">
+          <option>DNI</option>
+          <option>L.C.</option>
+          <option>L.E.</option>
+          <option>Cédula</option>
+        </select>
+    </div>
+    <div class="col-sm-5">
+        <input type="text" class="form-control" id="document_number">
+    </div>
+  </div>
+  <div class="form-group" id="security_code_field">
+    <label for="security_code" class="col-sm-3 control-label">Código de seguridad</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" id="security_code">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="security_code" class="col-sm-3 control-label">Total a pagar</label>
+    <div class="col-sm-2">
+      <label class="control-label">$100</label>
+    </div>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button id="paybutton" type="button" class="btn btn-primary">Acreditar Pago</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <style>
     .detail {

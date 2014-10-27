@@ -16,6 +16,8 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require bootstrap
+//= require credit_card_validator
+//= require cc_number_validator
 
 $(document).on("ready page:change", function() {
 	$.datepicker.regional['es'] = {
@@ -50,6 +52,29 @@ $(document).on("ready page:change", function() {
     });
 });
 
+$(document).on("ready page:change", function() {
+  
+  function valid_cc(result) {
+    var valid = (result.lenght_valid == true) && (result.luhn_valid==true);
+    console.log(valid);
+    return true;
+  }
+
+  $('#cc_number').payment('formatCardNumber');
+  $('#expiration').payment('formatCardExpiry');
+  $('#security_code').payment('formatCardCVC');
+  $('#cc_number').validateCreditCard(function(result) { 
+        var cardType = $.payment.cardType($('#cc_number').val());
+        $('#cc_type').val(cardType.toUpperCase());
+    });
+
+  $( "#paybutton" ).click(function() {
+    $.post( "publications/" + window.idToPay + "/pay", function( data ) {
+      $('#modal').modal('hide');
+      location.reload();
+    });
+  });
+});
 
  $(document).on("ready page:change", function() {
     var marker;
