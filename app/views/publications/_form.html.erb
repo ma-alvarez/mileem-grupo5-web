@@ -101,11 +101,11 @@
 	<div class="panel-body col-md-offset-1">
 			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]" %>
 	</div>
-	<div class="panel-heading col-md-offset-1">
+	<div class="panel-heading col-md-offset-1" id="video_tittle">
 		<h3>Video de la publicación</h3>
 		<h4>Ingresa la URL de un video de Youtube</h4>
 	</div>
-	<div class="panel-body col-md-offset-1">
+	<div class="panel-body col-md-offset-1" id="video_field">
 		<div class="row">
 			<div class="col-xs-3">
 				<%= f.label :video_link, class: "control-label" %>
@@ -121,3 +121,29 @@
 	</div>
 	</div>
 <% end %>
+
+
+<script type="text/javascript">
+	$(document).on("ready", function() {
+		if($('#publication_relevance').val() == 1){
+        $('#publication_video_link').val('');
+        $('#video_tittle').hide();
+        $('#video_field').hide();
+     }
+     else{
+      	$('#video_tittle').show();
+        $('#video_field').show();  
+     }
+     $('#publication_relevance').change(function(){
+        if($(this).val() == 1){
+        	$('#publication_video_link').val('');
+     			$('#video_tittle').hide();
+        	$('#video_field').hide();
+        }
+        else{
+          $('#video_tittle').show();
+        	$('#video_field').show();
+        }
+     })
+	});	
+</script>

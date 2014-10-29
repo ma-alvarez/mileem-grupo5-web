@@ -112,24 +112,3 @@ $(document).on("ready page:change", function() {
     google.maps.event.addDomListener(window, 'load', init_map);
     google.maps.event.addDomListener(window, 'page:load', init_map);
   });
-
-
-$(document).on("ready page:change", function() {
-     if($('#publication_relevance').val() == 1){
-        $("#publication_video_link").attr('disabled','disabled');
-        $("#publication_video_link").val('');
-     }
-     else{
-        $("#publication_video_link").removeAttr('disabled');
-     }
-
-     $('#publication_relevance').change(function(){
-        if($(this).val() == 1){
-          $("#publication_video_link").attr('disabled','disabled');
-          $("#publication_video_link").val('');
-        }
-        else{
-          $("#publication_video_link").removeAttr('disabled');
-        }
-     })
-  });
