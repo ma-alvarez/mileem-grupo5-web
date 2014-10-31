@@ -142,7 +142,7 @@ class PublicationsController < ApplicationController
       flash[:notice] = "Te quedan " + @publication.remaining_days.to_s + " días, a partir de cuando reactives tu publicación"
     else
       redirect_to publications_path
-      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límites de 3 pausas."
+      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límite de 3 pausas."
     end
   end
 
@@ -158,6 +158,7 @@ class PublicationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
       @publication = Publication.find(params[:id])
+      @publication.fetched_from_db = true
       gon.lat = @publication.latitude
       gon.lng = @publication.longitude
     end

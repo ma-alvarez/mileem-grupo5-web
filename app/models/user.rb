@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :full_name, format: { without: /\s{2}/, 
     message: "no debe contener 2 o más espacios en blanco consecutivos"}
       validates :phone, format: {with: /\A[0-9]{8,15}\z/,
-    message: "debe contener entre 8 y 15 caracteres numéricos unicamente"}, allow_blank: true
+    message: "debe contener entre 8 y 15 caracteres numéricos únicamente"}, allow_blank: true
 
     
 end

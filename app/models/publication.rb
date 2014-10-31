@@ -13,6 +13,8 @@ class Publication < ActiveRecord::Base
   validates_numericality_of :age, less_than_or_equal_to:1000, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :expenses, less_than_or_equal_to:100000, greater_than_or_equal_to:0, only_integer:true
   validates_numericality_of :area, less_than_or_equal_to:100000, greater_than_or_equal_to:0, only_integer:true
+
+  attr_accessor :fetched_from_db #se setea en true cuando se toman los datos de la base con el find en el controller
   
   TRANSACTION_TYPES = [['Compra','Compra'],['Alquiler','Alquiler']]
   PROPERTY_TYPES = [['Casa', 'Casa'], ['Departamento','Departamento']]
@@ -61,6 +63,10 @@ class Publication < ActiveRecord::Base
 
   def finished?
     paid && !active && expiration_date <= Date.today && remaining_days == 0
+  end
+  
+  def is_editable?
+    !fetched_from_db
   end
 
   def self.active_publications(publications)
@@ -136,6 +142,16 @@ class Publication < ActiveRecord::Base
 
   def remaining_pauses
     3 - self.pause_counter
+  end
+
+  def is_editable?(atribute)
+    return true if !fetched_from_db
+    case atribute
+    when 'currency' then true
+    when 'price' then true
+    when 'expenses' then true
+    else false
+    end
   end
 
 end
