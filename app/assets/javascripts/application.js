@@ -16,6 +16,8 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require bootstrap
+//= require credit_card_validator
+//= require cc_number_validator
 
 $(document).on("ready page:change", function() {
 	$.datepicker.regional['es'] = {
@@ -50,6 +52,157 @@ $(document).on("ready page:change", function() {
     });
 });
 
+$(document).on("ready", function() {
+  $('#paybutton').prop('disabled', true);
+  $('#cc_number').payment('formatCardNumber');
+  $('#expiration').payment('formatCardExpiry');
+  $('#security_code').payment('formatCardCVC');
+
+  function validateDNI(dni) {
+    var patt = /^\d{8}$/i
+    return patt.test(dni);
+  }
+
+  function validateName(name) {
+   var patt = /^[a-zA-Z ]+$/
+   return patt.test(name);
+  }
+
+  function validateCCNumber(number) {
+    return $.payment.validateCardNumber(number);
+  }
+
+  function validateExpiration(expiration) {
+    return $.payment.validateCardExpiry(expiration.month, expiration.year);
+  }
+
+  function validateCVC(cvc,type) {
+    return $.payment.validateCardCVC(cvc,type);
+  }
+
+  function validPayment(expiration,cvc,number,type,dni,name) {
+    var validExpiration = validateExpiration(expiration);
+    var validCCNumber = validateCCNumber(number)
+    var validCVC = validateCVC(cvc,type);
+    var validDNI = validateDNI(dni);
+    var validName = validateName(name);
+    return validExpiration && validCCNumber && validCVC && validDNI && validName;
+  }
+
+  //Validations
+  $('#expiration').on('input', function() {
+    var expiration = $.payment.cardExpiryVal($('#expiration').val());
+    var cvc = $('#security_code').val();
+    var number = $('#cc_number').val();
+    var type = $('#cc_type').val().toLowerCase();
+    var dni = $('#document_number').val();
+    var name = $('#full_name').val();
+    var valid = validPayment(expiration,cvc,number,type,dni,name);
+    if(!validateExpiration(expiration)) {
+      $('#expiration_field').addClass('has-error');
+      $('#expiration_field').removeClass('has-success');
+    } else {
+      $('#expiration_field').addClass('has-success');
+      $('#expiration_field').removeClass('has-error');
+    }
+
+    $('#paybutton').prop('disabled', !valid);
+  });
+
+  $('#security_code').on('input', function() {
+    var expiration = $.payment.cardExpiryVal($('#expiration').val());
+    var cvc = $('#security_code').val();
+    var number = $('#cc_number').val();
+    var type = $('#cc_type').val().toLowerCase();
+    var dni = $('#document_number').val();
+    var name = $('#full_name').val();
+    var valid = validPayment(expiration,cvc,number,type,dni,name);
+
+    if(!validateCVC(cvc,type)) {
+      $('#security_code_field').addClass('has-error');
+      $('#security_code_field').removeClass('has-success');
+    } else {
+      $('#security_code_field').addClass('has-success');
+      $('#security_code_field').removeClass('has-error');
+    }
+
+    $('#paybutton').prop('disabled', !valid);
+  });
+
+  $('#cc_number').on('input', function() {
+    var expiration = $.payment.cardExpiryVal($('#expiration').val());
+    var cvc = $('#security_code').val();
+    var number = $('#cc_number').val();
+    var type = $('#cc_type').val().toLowerCase();
+    var dni = $('#document_number').val();
+    var name = $('#full_name').val();
+    var valid = validPayment(expiration,cvc,number,type,dni,name);
+
+    if(!validateCCNumber(number)) {
+      $('#cc_field').addClass('has-error');
+      $('#cc_field').removeClass('has-success');
+    } else {
+      $('#cc_field').removeClass('has-error');
+      $('#cc_field').addClass('has-success');
+    }
+
+    $('#paybutton').prop('disabled', !valid);
+  });
+
+  $('#document_number').on('input', function() {
+    var expiration = $.payment.cardExpiryVal($('#expiration').val());
+    var cvc = $('#security_code').val();
+    var number = $('#cc_number').val();
+    var type = $('#cc_type').val().toLowerCase();
+    var dni = $('#document_number').val();
+    var name = $('#full_name').val();
+    var valid = validPayment(expiration,cvc,number,type,dni,name);
+
+    if(!validateDNI(dni)) {
+      $('#document_field').addClass('has-error');
+      $('#document_field').removeClass('has-success');
+    } else {
+      $('#document_field').removeClass('has-error');
+      $('#document_field').addClass('has-success');
+    }
+
+    $('#paybutton').prop('disabled', !valid);
+  });
+
+  $('#full_name').on('input', function() {
+    var expiration = $.payment.cardExpiryVal($('#expiration').val());
+    var cvc = $('#security_code').val();
+    var number = $('#cc_number').val();
+    var type = $('#cc_type').val().toLowerCase();
+    var dni = $('#document_number').val();
+    var name = $('#full_name').val();
+    var valid = validPayment(expiration,cvc,number,type,dni,name);
+    
+    if(!validateName(name)) {
+      $('#name_field').addClass('has-error');
+      $('#name_field').removeClass('has-success');
+    } else {
+      $('#name_field').removeClass('has-error');
+      $('#name_field').addClass('has-success');
+    }
+
+    $('#paybutton').prop('disabled', !valid);
+  });
+
+  $('#cc_number').validateCreditCard(function(result) { 
+        var cardType = $.payment.cardType($('#cc_number').val());
+        if(cardType) {
+          $('#cc_type').val(cardType.toUpperCase());         
+        }
+    });
+
+  $( "#paybutton" ).click(function() {
+    $.post( "publications/" + window.idToPay + "/pay", function( data ) {
+      $('#modal').modal('hide');
+      location.reload();
+    });
+  });
+});
 
  $(document).on("ready page:change", function() {
     var marker;

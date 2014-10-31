@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :publications do
+    member do
+      post 'pay'
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

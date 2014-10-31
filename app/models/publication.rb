@@ -118,6 +118,10 @@ class Publication < ActiveRecord::Base
     self.remaining_days = 0
   end
 
+  def pay
+    self.paid = true
+  end
+
   def determinate_payment
     if relevance == 1
       self.paid = true
