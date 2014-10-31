@@ -220,6 +220,7 @@ es:
         zone: "Barrio"
         currency: "Moneda"
         relevance: "Tipo de publicación"
+        video_link: "URL"
       user:      
         email: "Correo electrónico"
         full_name: "Nombre completo"

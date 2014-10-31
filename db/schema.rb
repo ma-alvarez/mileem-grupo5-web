@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113235536) do
+ActiveRecord::Schema.define(version: 20141113235537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20141113235536) do
     t.date     "expiration_date"
     t.integer  "pause_counter"
     t.integer  "remaining_days"
+    t.string   "video_link"
   end
 
   create_table "users", force: true do |t|

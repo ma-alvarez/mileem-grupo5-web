@@ -142,7 +142,7 @@ class PublicationsController < ApplicationController
       flash[:notice] = "Te quedan " + @publication.remaining_days.to_s + " días, a partir de cuando reactives tu publicación"
     else
       redirect_to publications_path
-      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límites de 3 pausas."
+      flash[:error] = "No puede volver a pausar la publicación ya que ha alcanzado el límite de 3 pausas."
     end
   end
 
@@ -158,13 +158,14 @@ class PublicationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
       @publication = Publication.find(params[:id])
+      @publication.fetched_from_db = true
       gon.lat = @publication.latitude
       gon.lng = @publication.longitude
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def publication_params
-      params.require(:publication).permit(:transaction_type, :property_type, :address, :latitude, :longitude, :area, :zone, :publication_date, :number_of_rooms, :price, :expenses, :age, :currency, :relevance, :paid, :active,:expiration_date, publication_attachments_attributes: [:id, :publication_id, :image])
+      params.require(:publication).permit(:transaction_type, :property_type, :address, :latitude, :longitude, :area, :zone, :publication_date, :number_of_rooms, :price, :expenses, :age, :currency,:video_link, :relevance, :paid, :active,:expiration_date, publication_attachments_attributes: [:id, :publication_id, :image])
     end
 
     def max_attachments(relevance)

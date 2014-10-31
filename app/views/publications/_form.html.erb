@@ -18,31 +18,38 @@
 			<div class="col-md-offset-1">
 			<div class="col-xs-2">
 				<%= f.label :publication_date, class: "control-label" %>
-				<%= f.text_field :publication_date, class: "datepicker form-control", readonly:true, style:"background:white;cursor:default;" %>
+				<% if @publication.is_editable?('publication_date')%>
+					<%= f.text_field :publication_date, class: "datepicker form-control", readonly:true, style:"background:white;cursor:default;", disabled: false %>
+				<% else %>
+					<%= f.text_field :publication_date, class: "datepicker form-control", readonly:true, style:"cursor:default;", disabled: true %>
+				<% end %>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :transaction_type, class: "control-label" %>
-				<%= f.select(:transaction_type, Publication::TRANSACTION_TYPES, {}, {class: "form-control"}) %>
+				<%= f.select(:transaction_type, Publication::TRANSACTION_TYPES, {}, {class: "form-control", disabled: !@publication.is_editable?('transaction_type')}) %>
 			</div>
 				<div class="col-xs-2">
 				<%= f.label :relevance, class: "control-label" %>
-				<%= f.select(:relevance, Publication::ACCOUNT_TYPES, {}, {class: "form-control"}) %>
+				<%= f.select(:relevance, Publication::ACCOUNT_TYPES, {}, {class: "form-control", disabled:  !@publication.is_editable?('relevance')}) %>
 			</div>
+				<div class="col-xs-2">
+					<span class="fa fa-question-circle form" style="margin-top:40px;cursor:pointer;" data-toggle="modal" data-target="#myModal"> ¿Qué tipo debo elegir?</span>
+				</div>
 			</div>
 		</div>
 		<div class = "row">
 			<div class="col-md-offset-1">
 			<div class="col-xs-2">
 				<%= f.label :currency, class: "control-label" %>
-				<%= f.select(:currency, Publication::CURRENCIES, {}, {class: "form-control"}) %>
+				<%= f.select(:currency, Publication::CURRENCIES, {}, {class: "form-control", disabled:  !@publication.is_editable?('currency')}) %>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :price, class: "control-label" %>
-				<%= f.text_field :price, class: "form-control"%>
+				<%= f.text_field :price, class: "form-control",  disabled: !@publication.is_editable?('price')%>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :expenses, class: "control-label" %>
-				<%= f.text_field :expenses, class: "form-control"%>
+				<%= f.text_field :expenses, class: "form-control", disabled: !@publication.is_editable?('expenses')%>
 			</div>
 			</div>
 		</div>
@@ -55,19 +62,19 @@
 			<div class="col-md-offset-1">
 			<div class="col-xs-1">
 				<%= f.label :age, class: "control-label" %>
-				<%= f.text_field :age, class: "form-control"%>
+				<%= f.text_field :age, class: "form-control", disabled: !@publication.is_editable?('age')%>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :area, class: "control-label" %>
-				<%= f.text_field :area, class: "form-control"%>
+				<%= f.text_field :area, class: "form-control", disabled: !@publication.is_editable?('area')%>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :number_of_rooms, class: "control-label" %>
-				<%= f.select(:number_of_rooms, Publication::NUMBER_OF_ROOMS, {}, {class: "form-control"}) %>
+				<%= f.select(:number_of_rooms, Publication::NUMBER_OF_ROOMS, {}, {class: "form-control", disabled: !@publication.is_editable?('number_of_rooms')}) %>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :property_type, class: "control-label" %>
-				<%= f.select(:property_type, Publication::PROPERTY_TYPES, {}, {class: "form-control"}) %>
+				<%= f.select(:property_type, Publication::PROPERTY_TYPES, {}, {class: "form-control", disabled: !@publication.is_editable?('property_type')}) %>
 			</div>
 		</div>
 		</div>
@@ -81,25 +88,39 @@
 		<div class = "row">
 			<div class="col-xs-3">
 				<%= f.label :address, class: "control-label" %>
-				<%= f.text_field :address, class: "form-control", readonly:true %>
+				<%= f.text_field :address, class: "form-control", readonly:true, disabled: !@publication.is_editable?('address')%>
 			</div>
 			<div class="col-xs-2">
 				<%= f.label :zone, class: "control-label" %>
-				<%= f.collection_select(:zone, Zone.all, :name, :name, {}, {class: "form-control"}) %>
+				<%= f.collection_select(:zone, Zone.all, :name, :name, {}, {class: "form-control", disabled: !@publication.is_editable?('zone') }) %>
 			</div>
 		</div>
 		<div style='width: 800px;'>
-		  <div id="map" style='width: 800px; height: 500px; margin-top:25px;'></div>
+		  <div id="map" style='width: 800px; height: 500px; margin-top:25px;' onclick="window.editable = <%= @publication.is_editable?('zone') %>">
+		  </div>
 		</div>
 	</div>
 	</div>
-	<%= f.hidden_field :latitude, :id => "lat" %>
-  <%= f.hidden_field :longitude, :id => "lng" %>
+	<%= f.hidden_field :latitude, :id => "lat"%>
+  <%= f.hidden_field :longitude, :id => "lng"%>
+  <%= f.hidden_field :editable, :value => @publication.is_editable?('map'), :id => "editable" %>
 	<div class="panel-heading col-md-offset-1">
 		<h3>Imágenes de la publicación</h3>
 	</div>
 	<div class="panel-body col-md-offset-1">
-			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]" %>
+			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]", disabled: !@publication.is_editable?('image') %>
+	</div>
+	<div class="panel-heading col-md-offset-1" id="video_tittle">
+		<h3>Video de la publicación</h3>
+		<h4>Ingresa la URL de un video de Youtube</h4>
+	</div>
+	<div class="panel-body col-md-offset-1" id="video_field">
+		<div class="row">
+			<div class="col-xs-3">
+				<%= f.label :video_link, class: "control-label" %>
+				<%= f.text_field :video_link, class: "form-control", readonly: !@publication.is_editable?('video_link') %>
+			</div>
+		</div>  
 	</div>
 	<div class="col-md-offset-1">
 	<div class="col-xs-2">
@@ -109,3 +130,84 @@
 	</div>
 	</div>
 <% end %>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tipo de Publicaciones</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+		   		<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">GRATUITA</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> Gratis</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 3 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video no incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:1 mes<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque bajo<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">BÁSICA</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> 100</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 5 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:3 meses<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque medio<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">PREMIUM</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> 150</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 10 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:12 meses<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque alto<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+     		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(document).on("ready page:change", function() {
+		if($('#publication_relevance').val() == 1){
+				$("#publication_video_link").attr('disabled','disabled');
+        $('#publication_video_link').val('');
+        $('#video_tittle').hide();
+        $('#video_field').hide();
+     }
+     else{
+      	$('#video_tittle').show();
+        $('#video_field').show();  
+     }
+     $('#publication_relevance').change(function(){
+        if($(this).val() == 1){
+        	$("#publication_video_link").attr('disabled','disabled');
+        	$('#publication_video_link').val('');
+     			$('#video_tittle').hide();
+        	$('#video_field').hide();
+        }
+        else{
+          $('#video_tittle').show();
+        	$('#video_field').show();
+        	$("#publication_video_link").removeAttr('disabled');
+        }
+     })
+	});	
+</script>

@@ -70,11 +70,6 @@
                         <h4>Antigüedad (en años): <%= @publication.age %></h4> 
                 </div>
             </div>
-            <%= link_to t('.back', :default => t("Volver a Publicaciones")), publications_path, :class => 'btn btn-default' %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_publication_path(@publication), :class => 'btn btn-default' %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),publication_path(@publication),:method => 'delete',
-                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                :class => 'btn btn-danger' %>  
         </div>
         <div class="col-md-6">
             <div class="panel panel-default" style="height:432px">
@@ -84,6 +79,27 @@
             </div>
         </div>
     </div>
+    <%- if @publication.video_link %>
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="text-center header">Video</div> 
+                    <div class="embed-container">  
+                        <%= embed(@publication.video_link) %>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    <% end -%>
+            <%= link_to t('.back', :default => t("Volver a Publicaciones")), publications_path, :class => 'btn btn-default' %>
+            <%- if !@publication.finished? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_publication_path(@publication), :class => 'btn btn-default' %>
+            <% end -%>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),publication_path(@publication),:method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                :class => 'btn btn-danger' %>  
 </div>
 
 
@@ -121,5 +137,24 @@
         height: 70px;
         font-size: 27px;
         padding: 10px;
+    }
+
+    .embed-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px;
+      height: 0;
+      overflow: hidden;
+      width: 100%;
+      height: auto;
+    } 
+
+    .embed-container iframe,
+    .embed-container object,
+    .embed-container embed {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
     }
 </style>
