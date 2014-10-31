@@ -2,7 +2,7 @@ class Publication < ActiveRecord::Base
   belongs_to :user
   has_many :publication_attachments, :inverse_of => :publication, :dependent => :destroy
   accepts_nested_attributes_for :publication_attachments, allow_destroy: true
-  YT_LINK_FORMAT = /\A.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i
+  YT_LINK_FORMAT = /\A*youtube.com\/(v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i
  
 
   validates :transaction_type, :address, :zone, :price, :publication_date, presence: true

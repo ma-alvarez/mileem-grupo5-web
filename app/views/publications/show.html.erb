@@ -94,7 +94,9 @@
         </div>
     <% end -%>
             <%= link_to t('.back', :default => t("Volver a Publicaciones")), publications_path, :class => 'btn btn-default' %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_publication_path(@publication), :class => 'btn btn-default' %>
+            <%- if !@publication.finished? %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")), edit_publication_path(@publication), :class => 'btn btn-default' %>
+            <% end -%>
             <%= link_to t('.destroy', :default => t("helpers.links.destroy")),publication_path(@publication),:method => 'delete',
                 :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                 :class => 'btn btn-danger' %>  

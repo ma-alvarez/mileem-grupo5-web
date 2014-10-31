@@ -96,12 +96,14 @@
 			</div>
 		</div>
 		<div style='width: 800px;'>
-		  <div id="map" style='width: 800px; height: 500px; margin-top:25px;'></div>
+		  <div id="map" style='width: 800px; height: 500px; margin-top:25px;' onclick="window.editable = <%= @publication.is_editable?('zone') %>">
+		  </div>
 		</div>
 	</div>
 	</div>
 	<%= f.hidden_field :latitude, :id => "lat"%>
   <%= f.hidden_field :longitude, :id => "lng"%>
+  <%= f.hidden_field :editable, :value => @publication.is_editable?('map'), :id => "editable" %>
 	<div class="panel-heading col-md-offset-1">
 		<h3>Imágenes de la publicación</h3>
 	</div>
@@ -183,8 +185,9 @@
 </div>
 
 <script type="text/javascript">
-	$(document).on("ready", function() {
+	$(document).on("ready page:change", function() {
 		if($('#publication_relevance').val() == 1){
+				$("#publication_video_link").attr('disabled','disabled');
         $('#publication_video_link').val('');
         $('#video_tittle').hide();
         $('#video_field').hide();
@@ -195,6 +198,7 @@
      }
      $('#publication_relevance').change(function(){
         if($(this).val() == 1){
+        	$("#publication_video_link").attr('disabled','disabled');
         	$('#publication_video_link').val('');
      			$('#video_tittle').hide();
         	$('#video_field').hide();
@@ -202,6 +206,7 @@
         else{
           $('#video_tittle').show();
         	$('#video_field').show();
+        	$("#publication_video_link").removeAttr('disabled');
         }
      })
 	});	

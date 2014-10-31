@@ -92,22 +92,24 @@ $(document).on("ready page:change", function() {
 
         geocoder = new google.maps.Geocoder();
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-        google.maps.event.addListener(map, 'click', function(e) {
-        geocoder.geocode({'latLng':e.latLng}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            if (results[0]) {
-              if (getCity(results) == expectedCity) {
-                placeMarker(e.latLng, map);
-                $('#publication_address').val(getAddress(results));
-                $('#publication_zone').val(results[0].address_components[2].long_name);
-                set_latlng(marker);
-              } else 
-              alert(invalidAddress);
+        if($('#editable').val() == 'true') {
+          google.maps.event.addListener(map, 'click', function(e) {
+          geocoder.geocode({'latLng':e.latLng}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                if (getCity(results) == expectedCity) {
+                  placeMarker(e.latLng, map);
+                  $('#publication_address').val(getAddress(results));
+                  $('#publication_zone').val(results[0].address_components[2].long_name);
+                  set_latlng(marker);
+                } else 
+                alert(invalidAddress);
+              }
             }
-          }
+            });
           });
-        });
+        }
+
     }
     google.maps.event.addDomListener(window, 'load', init_map);
     google.maps.event.addDomListener(window, 'page:load', init_map);
