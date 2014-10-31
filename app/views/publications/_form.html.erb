@@ -32,6 +32,9 @@
 				<%= f.label :relevance, class: "control-label" %>
 				<%= f.select(:relevance, Publication::ACCOUNT_TYPES, {}, {class: "form-control", disabled:  !@publication.is_editable?('relevance')}) %>
 			</div>
+				<div class="col-xs-2">
+					<span class="fa fa-question-circle form" style="margin-top:40px;cursor:pointer;" data-toggle="modal" data-target="#myModal"> ¿Qué tipo debo elegir?</span>
+				</div>
 			</div>
 		</div>
 		<div class = "row">
@@ -105,11 +108,11 @@
 	<div class="panel-body col-md-offset-1">
 			<%= f.file_field :image, :multiple => true, name: "publication_attachments[image][]", disabled: !@publication.is_editable?('image') %>
 	</div>
-	<div class="panel-heading col-md-offset-1">
+	<div class="panel-heading col-md-offset-1" id="video_tittle">
 		<h3>Video de la publicación</h3>
 		<h4>Ingresa la URL de un video de Youtube</h4>
 	</div>
-	<div class="panel-body col-md-offset-1">
+	<div class="panel-body col-md-offset-1" id="video_field">
 		<div class="row">
 			<div class="col-xs-3">
 				<%= f.label :video_link, class: "control-label" %>
@@ -125,3 +128,81 @@
 	</div>
 	</div>
 <% end %>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tipo de Publicaciones</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+		   		<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">GRATUITA</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> Gratis</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 3 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video no incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:1 mes<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque bajo<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">BÁSICA</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> 100</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 5 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:3 meses<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque medio<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-primary">
+					   	<div class="panel-heading">PREMIUM</div>
+					   		<table class="table">
+					      	<th><span class="fa fa-dollar icon"> 150</span></th>
+					      	<tr><td><span class="fa fa-camera"> Hasta 10 fotos<span></td></tr>
+					      	<tr><td><span class="fa fa-video-camera"> Video incluido<span></td></tr>
+					      	<tr><td><span class="fa fa-clock-o"> Duración:12 meses<span></td></tr>
+					      	<tr><td><span class="fa fa-star"> Destaque alto<span></td></tr>
+					   		</table>
+						</div>
+					</div>
+     		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(document).on("ready", function() {
+		if($('#publication_relevance').val() == 1){
+        $('#publication_video_link').val('');
+        $('#video_tittle').hide();
+        $('#video_field').hide();
+     }
+     else{
+      	$('#video_tittle').show();
+        $('#video_field').show();  
+     }
+     $('#publication_relevance').change(function(){
+        if($(this).val() == 1){
+        	$('#publication_video_link').val('');
+     			$('#video_tittle').hide();
+        	$('#video_field').hide();
+        }
+        else{
+          $('#video_tittle').show();
+        	$('#video_field').show();
+        }
+     })
+	});	
+</script>
