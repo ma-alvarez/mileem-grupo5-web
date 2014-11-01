@@ -13,6 +13,7 @@ class PublicationsController < ApplicationController
       last_date = params[:last_date].to_date if !params[:last_date].blank?
       filter_hash[:publication_date] = first_date..last_date
       @publications = current_user.publications.where(filter_hash)
+      @publications = Publication.not_retired_publications(@publications)
       if !params[:status].blank?
         if params[:status] == 'active'
           @publications = Publication.active_publications(@publications)
@@ -31,7 +32,9 @@ class PublicationsController < ApplicationController
         end
       end 
     else
+      #@publications = current_user.publications.where(retired_at: nil)
       @publications = current_user.publications
+      @publications = Publication.not_retired_publications(@publications)
     end
   end
 
@@ -75,7 +78,7 @@ class PublicationsController < ApplicationController
         @publication.save
       end
       if !error 
-        flash[:notice] = "La publicación fue creado con éxito."
+        flash[:notice] = "La publicación fue creada con éxito."
         redirect_to @publication
       else
         flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes"
@@ -119,7 +122,9 @@ class PublicationsController < ApplicationController
   # DELETE /publications/1
   # DELETE /publications/1.json
   def destroy
-    @publication.destroy
+    #@publication.destroy
+    @publication.retire
+    @publication.save
     respond_to do |format|
       format.html { redirect_to publications_url, notice: 'La publicación ha sido eliminada.' }
       format.json { head :no_content }
@@ -152,6 +157,14 @@ class PublicationsController < ApplicationController
     @publication.save
     redirect_to publications_path
      flash[:notice] = "Te quedan " + @publication.remaining_pauses.to_s + " pausas disponibles"
+  end
+
+  def retire
+    set_publication
+    @publication.retire
+    @publication.save
+    redirect_to publications_path
+    flash[:notice] = "La publicación ha sido borrada"
   end
 
   def pay

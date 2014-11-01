@@ -65,8 +65,16 @@ class Publication < ActiveRecord::Base
     paid && !active && expiration_date <= Date.today && remaining_days == 0
   end
   
-  def is_editable?
-    !fetched_from_db
+  def fetched_from_db?
+    fetched_from_db
+  end
+
+  def retired?
+    retired_at != nil
+  end
+  
+  def not_retired?
+    !retired?
   end
 
   def self.active_publications(publications)
@@ -98,6 +106,18 @@ class Publication < ActiveRecord::Base
     publications.each { |publication| filtered_publications << publication if publication.enable_to_publish? }
     return filtered_publications
   end
+  
+  def self.retired_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.retired? }
+    return filtered_publications
+  end
+  
+  def self.not_retired_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.not_retired? }
+    return filtered_publications
+  end
 
   def publicate
     self.active = true
@@ -120,6 +140,14 @@ class Publication < ActiveRecord::Base
 
   def pay
     self.paid = true
+  end
+
+  def retire
+    self.retired_at = Time.now
+  end
+  
+  def retired
+    self.retired_at
   end
 
   def determinate_payment
