@@ -18,6 +18,7 @@ scheduler.every '30s' do
 	activationHash[:active] = false
 	activationHash[:paid] = true
 	activationHash[:publication_date] = Date.today..Date.today
+	activationHash[:remaining_days] = 0
 	@publicationsToActivate = Publication.where(activationHash)
 	@publicationsToActivate.all.each do |eachPublicationToActivate|
 		eachPublicationToActivate.update_attribute(:active, true)

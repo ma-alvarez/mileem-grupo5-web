@@ -35,7 +35,21 @@ $(document).on("ready page:change", function() {
   initStatus: 'Selecciona la fecha', isRTL: false};
 		$.datepicker.setDefaults($.datepicker.regional['es']);
 	  $('.datepicker').datepicker();
+    $('#first_date').datepicker({ 
+      beforeShow: function(input, inst) {
+       var maxDate = $('#last_date').datepicker('getDate');
+       $(this).datepicker('option', 'maxDate', maxDate);
+       $(this).datepicker('option', 'minDate', new Date(2014, 1 - 1, 1));
+      }
+    });
+    $('#last_date').datepicker({
+      beforeShow: function(input, inst) {
+       var mindate = $('#first_date').datepicker('getDate');
+       $(this).datepicker('option', 'minDate', mindate);
+      }
+    });
 });
+
 
  $(document).on("ready page:change", function() {
     var marker;
@@ -56,7 +70,7 @@ $(document).on("ready page:change", function() {
     }
 
     function getAddress(results) {
-      return results[0].address_components[1].long_name + " "+ results[0].address_components[0].long_name;
+      return results[0].address_components[1].short_name + " "+ results[0].address_components[0].short_name;
     }
 
     function getCity (results) {

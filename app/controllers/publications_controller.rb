@@ -5,7 +5,34 @@ class PublicationsController < ApplicationController
   # GET /publications
   # GET /publications.json
   def index
-    @publications = current_user.publications
+    if params.has_value?("Buscar")
+      filter_hash = {}
+      first_date = "2014-01-01".to_date
+      last_date = "2100-01-01".to_date
+      first_date = params[:first_date].to_date if !params[:first_date].blank?
+      last_date = params[:last_date].to_date if !params[:last_date].blank?
+      filter_hash[:publication_date] = first_date..last_date
+      @publications = current_user.publications.where(filter_hash)
+      if !params[:status].blank?
+        if params[:status] == 'active'
+          @publications = Publication.active_publications(@publications)
+        end
+        if params[:status] == 'missing_pay'
+          @publications = Publication.missing_pay_publications(@publications)
+        end
+        if params[:status] == 'enable_to_publish'
+          @publications = Publication.enable_to_publish_publications(@publications)
+        end
+        if params[:status] == 'paused'
+          @publications = Publication.paused_publications(@publications)
+        end
+        if params[:status] == 'finished'
+          @publications = Publication.finished_publications(@publications)
+        end
+      end 
+    else
+      @publications = current_user.publications
+    end
   end
 
   # GET /publications/1

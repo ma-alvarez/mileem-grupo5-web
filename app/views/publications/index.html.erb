@@ -2,7 +2,28 @@
 <%= render :partial => 'navigation' %>
 <%- model_class = Publication -%>
 <div class="page-header">
-<h1>Mis Publicaciones</h1>
+    <h1>Mis Publicaciones</h1>
+<%= form_tag '', :method => :get do %>
+<div class="row">
+<div class="panel-body">
+    <div class="col-xs-2">
+    <%= label_tag "Estado",nil, class: "control-label" %>
+    <%= select_tag(:status,  options_for_select(Publication::STATUS), class: "form-control") %>
+    </div>
+    <div class="col-xs-2">
+    <%= label_tag "Fecha de publicación desde",nil, class: "control-label" %>
+    <%= text_field_tag :first_date,nil, { class: "form-control", readonly:true, style:"background:white;cursor:default;"} %>
+    </div>
+     <div class="col-xs-2">
+    <%= label_tag "Fecha de publicación hasta",nil, class: "control-label" %>
+    <%= text_field_tag :last_date,nil, { class: "form-control", readonly:true, style:"background:white;cursor:default;"} %>
+    </div>
+    <div class= "col-xs-2">
+    <%= submit_tag 'Buscar', class: "btn btn-primary" ,style:"margin-top:25px;" %>
+    </div>
+</div>
+</div>
+<% end %>
 </div>
 <% @publications.each_slice(2) do |p1, p2| %>
 <div class="container">
@@ -46,16 +67,18 @@
                             <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
                             <%- if p1.enable_to_publish? %>
-                                    <%=button_to "Publicar",[:publicate, p1], class: "btn btn-success btn-xs pull-right" %>
+                                    <%=button_to "Publicar",[:publicate, p1], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.active? %>
-                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro que desea pausar su publicación?'},class: "btn btn-warning btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro que desea pausar su publicación?'},class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro que desea reactivar su publicación?'}, class: "btn btn-success btn-xs pull-right" %>
+                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <h5><%= p1.property_type %> | <%= p1.zone %></h5> 
-                            <%= p1.transaction_type %><span class="fa fa-search icon pull-right"> <%= link_to "Ver detalle", publication_path(p1) %></span>
+                            <%= p1.transaction_type %>
+                            <%= link_to "Ver detalle", publication_path(p1),class: "pull-right detail" %>
+                            <span class="fa fa-search icon pull-right"></span> 
                         </div>
                     </div>
                 </div>
@@ -101,16 +124,18 @@
                             <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p2.address %></h4>
                             <%- if p2.enable_to_publish? %>
-                               <%=button_to "Publicar",[:publicate, p2], class: "btn btn-success btn-xs pull-right" %>
+                               <%=button_to "Publicar",[:publicate, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.active? %>
-                               <%=button_to "Pausar",[:pause, p2], class: "btn btn-warning btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p2], class: "btn btn-success btn-xs pull-right" %>
+                               <%=button_to "Reactivar",[:unpause, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
-                            <%= p2.transaction_type %><span class="fa fa-search icon pull-right"> <td><%= link_to "Ver detalle", publication_path(p2) %></td></span>
+                            <%= p2.transaction_type %>
+                            <%= link_to "Ver detalle", publication_path(p2),class: "pull-right detail" %>
+                            <span class="fa fa-search icon pull-right"></span> 
                         </div>
                     </div>
                 </div>
@@ -120,3 +145,10 @@
     </div>
   </div>
 <% end %>
+
+<style>
+    .detail {
+        font-size: 18px;
+    }
+}
+</style>

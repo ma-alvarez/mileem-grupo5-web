@@ -12,6 +12,8 @@ class Publication < ActiveRecord::Base
   NUMBER_OF_ROOMS = [['1',1], ['2',2], ['3',3], ['4+',4]]
   CURRENCIES = [['$ (Pesos Argentinos)','ARS'] ,['US$ (Dólares)', 'US']]
   ACCOUNT_TYPES = [['Gratuita',1],['Básica',2],['Premium',3]]
+  STATUS = [['--Todos--', ''],['Activa', 'active'], ['Pausada', 'paused'], ['Finalizada', 'finished'], ['Pte. de pago', 'missing_pay'], 
+  ['Lista para publicar', 'enable_to_publish']]
 
   def type
      Publication::ACCOUNT_TYPES[relevance - 1][0]
@@ -52,6 +54,36 @@ class Publication < ActiveRecord::Base
 
   def finished?
     paid && !active && expiration_date <= Date.today && remaining_days == 0
+  end
+
+  def self.active_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.active? }
+    return filtered_publications
+  end
+
+  def self.paused_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.paused? }
+    return filtered_publications
+  end
+
+  def self.finished_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.finished? }
+    return filtered_publications
+  end
+
+  def self.missing_pay_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.missing_pay? }
+    return filtered_publications
+  end
+
+  def self.enable_to_publish_publications(publications)
+    filtered_publications = []
+    publications.each { |publication| filtered_publications << publication if publication.enable_to_publish? }
+    return filtered_publications
   end
 
   def publicate
