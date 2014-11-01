@@ -162,6 +162,14 @@ class PublicationsController < ApplicationController
     redirect_to publications_path
   end
 
+  def republicate
+    binding.pry
+    set_publication
+    @publication.republicate
+    @publication.save
+    redirect_to publications_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_publication
