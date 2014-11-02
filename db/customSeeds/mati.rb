@@ -1,6 +1,14 @@
 User.create!([
   {email: "magual89@gmail.com", encrypted_password: "$2a$10$teR8VJFpKhETN92S6wvBDezSY4pqwQZ2ohWqQFDvNfHPnzlvvl03i", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 4, current_sign_in_at: "2014-11-02 20:07:04", last_sign_in_at: "2014-11-02 20:05:38", current_sign_in_ip: #<IPAddr: IPv4:127.0.0.1/255.255.255.255>, last_sign_in_ip: #<IPAddr: IPv4:127.0.0.1/255.255.255.255>, full_name: "Matías Alvarez", phone: "541158964340"}
 ])
+
+User.create!(
+      full_name: 'Mileem Prueba',
+      email: 'mileemprueba@mileem.com', 
+      password: 'mileemprueba', 
+      password_confirmation: 'mileemprueba',
+      phone: "1569886542")
+
 Publication.create!([
   {transaction_type: "Alquiler", property_type: "Departamento", address: "Neuquén 1038-1100", area: 20, number_of_rooms: 2, price: 5000, expenses: 500, age: 10, user_id: 1, publication_date: "2014-11-02", zone: "Caballito", relevance: 1, currency: "ARS", latitude: -34.6158330553697, longitude: -58.4489527344704, active: true, paid: true, expiration_date: "2014-12-02", pause_counter: 0, remaining_days: 0, video_link: nil, retired_at: "2014-11-02 19:30:54"},
   {transaction_type: "Compra", property_type: "Casa", address: "México 3801-3899", area: 25, number_of_rooms: 3, price: 1500000, expenses: 0, age: 15, user_id: 1, publication_date: "2014-08-15", zone: "Almagro", relevance: 2, currency: "ARS", latitude: -34.6199298938928, longitude: -58.4200841188431, active: true, paid: true, expiration_date: "2014-11-15", pause_counter: 0, remaining_days: 0, video_link: "", retired_at: nil},
