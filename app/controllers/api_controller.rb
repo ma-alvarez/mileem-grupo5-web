@@ -2,8 +2,7 @@ class ApiController < ApplicationController
   respond_to :json
 
   def all_publications
-  	@publications = Publication.all
-  	@publications = Publication.not_retired_publications(@publications)
+  	@publications = Publication.where("retired_at IS ?",nil)
     respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
   end
 
@@ -114,9 +113,8 @@ class ApiController < ApplicationController
     #Si page=2 y count=5, devuelve los registros desde el 6to
     offsetSentence = (((params['page'].to_i) -1) * (params['count'].to_i))
 
-    @publications = Publication.all
-    @publications = Publication.not_retired_publications(@publications)
-    @publications = @publications.where(opFiltersHash).order(orderSentence).limit(limitSentence).offset(offsetSentence)
+    @publications = Publication.where("retired_at IS ?",nil).where(opFiltersHash).order(orderSentence).limit(limitSentence).offset(offsetSentence)
+    
     respond_with @publications.as_json( include: 
       {user: {:only => [:email, :phone]}, publication_attachments: {only: :image}})
   end
