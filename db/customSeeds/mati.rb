@@ -1,7 +1,3 @@
-User.create!([
-  {email: "magual89@gmail.com", encrypted_password: "$2a$10$teR8VJFpKhETN92S6wvBDezSY4pqwQZ2ohWqQFDvNfHPnzlvvl03i", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 4, current_sign_in_at: "2014-11-02 20:07:04", last_sign_in_at: "2014-11-02 20:05:38", current_sign_in_ip: #<IPAddr: IPv4:127.0.0.1/255.255.255.255>, last_sign_in_ip: #<IPAddr: IPv4:127.0.0.1/255.255.255.255>, full_name: "Matías Alvarez", phone: "541158964340"}
-])
-
 User.create!(
       full_name: 'Mileem Prueba',
       email: 'mileemprueba@mileem.com', 
