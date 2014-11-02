@@ -28,6 +28,12 @@ Rails.application.routes.draw do
       post 'pay'
     end
   end
+  
+  resources :publications do
+    member do
+      post 'retire'
+    end
+  end
 
   resources :publications do
     member do

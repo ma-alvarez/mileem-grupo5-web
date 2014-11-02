@@ -73,10 +73,10 @@
                             <% end -%>
                             <h4><span class="fa fa-map-marker icon"></span> <%= p1.address %></h4>
                             <%- if p1.enable_to_publish? %>
-                                    <%=button_to "Publicar",[:publicate, p1], class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Publicar",[:publicate, p1], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.active? %>
-                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro que desea pausar su publicación?'},class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.missing_pay? %>
                                 <button onclick="$('#repaybutton').hide();window.idToPay = <%= p1.id %>; window.priceValue= <%= p1.standard_price %>; $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
@@ -143,7 +143,7 @@
                                <%=button_to "Publicar",[:publicate, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.active? %>
-                               <%=button_to "Pausar",[:pause, p2], class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p2], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.missing_pay? %>
                                 <button onclick="$('#repaybutton').hide();window.idToPay = <%= p2.id %>; window.priceValue= <%= p2.standard_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
@@ -151,7 +151,7 @@
                                 </button>
                             <% end -%>
                             <%- if p2.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p2], class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Reactivar",[:unpause, p2], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.republicable? %>
                                 <button onclick="$('#paybutton').hide();window.idToPay = <%= p2.id %>; window.priceValue= <%= p2.republication_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
