@@ -176,7 +176,6 @@ class PublicationsController < ApplicationController
   end
 
   def republicate
-    binding.pry
     set_publication
     @publication.republicate
     @publication.save
