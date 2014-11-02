@@ -23,6 +23,7 @@ class Publication < ActiveRecord::Base
   ACCOUNT_TYPES = [['Gratuita',1],['Básica',2],['Premium',3]]
   STATUS = [['--Todos--', ''],['Activa', 'active'], ['Pausada', 'paused'], ['Finalizada', 'finished'], ['Pte. de pago', 'missing_pay'], 
   ['Lista para publicar', 'enable_to_publish']]
+  PRICES = [100, 150]
 
   def type
      Publication::ACCOUNT_TYPES[relevance - 1][0]
@@ -75,6 +76,10 @@ class Publication < ActiveRecord::Base
   
   def not_retired?
     !retired?
+  end
+
+  def has_video?
+    !(self.video_link == nil || self.video_link.empty?)
   end
 
   def self.active_publications(publications)
@@ -150,6 +155,16 @@ class Publication < ActiveRecord::Base
     self.retired_at
   end
 
+  def republicate
+    self.active = true
+    self.paid = true
+     if relevance == 2
+       self.expiration_date = self.expiration_date + 3.months
+    elsif relevance == 3
+       self.expiration_date = self.expiration_date + 12.months
+    end
+  end
+
   def determinate_payment
     if relevance == 1
       self.paid = true
@@ -184,6 +199,26 @@ class Publication < ActiveRecord::Base
     when 'expenses' then true
     else false
     end
+  end
+
+  def republicable?
+    if (relevance == 2 || relevance == 3) && ((expiration_date - Date.today).days <= 30.days && self.active?) || (relevance == 2 || relevance == 3) && (self.finished?)
+      true
+    else
+      false
+    end
+  end
+
+  def republication_price
+    if (relevance == 2 || relevance == 3) && ((expiration_date - Date.today).days <= 30.days && self.active?)
+      Publication::PRICES[relevance-2] * 0.5
+    else
+      self.standard_price
+    end
+  end
+
+  def standard_price
+    Publication::PRICES[self.relevance-2]
   end
 
 end

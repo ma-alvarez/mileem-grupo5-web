@@ -52,8 +52,9 @@ $(document).on("ready page:change", function() {
     });
 });
 
-$(document).on("ready", function() {
+$(document).on("ready page:change", function() {
   $('#paybutton').prop('disabled', true);
+  $('#repaybutton').prop('disabled', true);
   $('#cc_number').payment('formatCardNumber');
   $('#expiration').payment('formatCardExpiry');
   $('#security_code').payment('formatCardCVC');
@@ -107,6 +108,7 @@ $(document).on("ready", function() {
     }
 
     $('#paybutton').prop('disabled', !valid);
+    $('#repaybutton').prop('disabled', !valid);
   });
 
   $('#security_code').on('input', function() {
@@ -127,6 +129,7 @@ $(document).on("ready", function() {
     }
 
     $('#paybutton').prop('disabled', !valid);
+    $('#repaybutton').prop('disabled', !valid);
   });
 
   $('#cc_number').on('input', function() {
@@ -147,6 +150,7 @@ $(document).on("ready", function() {
     }
 
     $('#paybutton').prop('disabled', !valid);
+    $('#repaybutton').prop('disabled', !valid);
   });
 
   $('#document_number').on('input', function() {
@@ -167,6 +171,7 @@ $(document).on("ready", function() {
     }
 
     $('#paybutton').prop('disabled', !valid);
+    $('#repaybutton').prop('disabled', !valid);
   });
 
   $('#full_name').on('input', function() {
@@ -187,6 +192,7 @@ $(document).on("ready", function() {
     }
 
     $('#paybutton').prop('disabled', !valid);
+    $('#repaybutton').prop('disabled', !valid);
   });
 
   $('#cc_number').validateCreditCard(function(result) { 
@@ -198,6 +204,13 @@ $(document).on("ready", function() {
 
   $( "#paybutton" ).click(function() {
     $.post( "publications/" + window.idToPay + "/pay", function( data ) {
+      $('#modal').modal('hide');
+      location.reload();
+    });
+  });
+
+  $( "#repaybutton" ).click(function() {
+    $.post( "publications/" + window.idToPay + "/republicate", function( data ) {
       $('#modal').modal('hide');
       location.reload();
     });

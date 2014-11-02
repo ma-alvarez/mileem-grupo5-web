@@ -79,14 +79,18 @@
                                <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.missing_pay? %>
-                                <button onclick="window.idToPay = <%= p1.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                <button onclick="$('#repaybutton').hide();window.idToPay = <%= p1.id %>; window.priceValue= <%= p1.standard_price %>; $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
                                     Pagar
                                 </button>
                             <% end -%>
                             <%- if p1.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
-                            <% end -%>   
-         <!--                    <%=button_to "Borrar",[:retire, p1], data: { confirm: '¿Está seguro de que desea borrar su publicación?'}, class: "btn btn-danger btn-xs pull-right" %>     -->                                     
+                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
+                            <% end -%>
+                            <%- if p1.republicable? %>
+                              <button onclick="$('#paybutton').hide();window.idToPay = <%= p1.id %>; window.priceValue= <%= p1.republication_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                    Republicar
+                                </button>
+                            <% end -%>
                             <h5><%= p1.property_type %> | <%= p1.zone %></h5> 
                             <%= p1.transaction_type %>
                             <%= link_to "Ver detalle", publication_path(p1),class: "pull-right detail" %>
@@ -142,14 +146,18 @@
                                <%=button_to "Pausar",[:pause, p2], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.missing_pay? %>
-                                <button onclick="window.idToPay = <%= p2.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                <button onclick="$('#repaybutton').hide();window.idToPay = <%= p2.id %>; window.priceValue= <%= p2.standard_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
                                     Pagar
                                 </button>
                             <% end -%>
                             <%- if p2.paused? %>
                                <%=button_to "Reactivar",[:unpause, p2], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
-  <!--                           <%=button_to "Borrar",[:retire, p2], data: { confirm: '¿Está seguro de que desea borrar su publicación?'}, class: "btn btn-danger btn-xs pull-right" %> -->
+                            <%- if p2.republicable? %>
+                                <button onclick="$('#paybutton').hide();window.idToPay = <%= p2.id %>; window.priceValue= <%= p2.republication_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                    Republicar
+                                </button>
+                            <% end -%>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %>
                             <%= link_to "Ver detalle", publication_path(p2),class: "pull-right detail" %>
@@ -180,7 +188,7 @@
     <div class="col-sm-5" id="cc_field">
       <input type="text" class="form-control" id="cc_number" placeholder="Nro. de tarjeta">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <input type="text" class="form-control" id="cc_type" readonly="true">
     </div>
   </div>
@@ -217,9 +225,9 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="security_code" class="col-sm-3 control-label">Total a pagar</label>
+    <label for="security_code" class="col-sm-3 control-label">Total a pagar en pesos</label>
     <div class="col-sm-2">
-      <label class="control-label">$100</label>
+      <label class="control-label" id="price_value"></label>
     </div>
   </div>
 </form>
@@ -227,6 +235,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button id="paybutton" type="button" class="btn btn-primary">Acreditar Pago</button>
+        <button id="repaybutton" type="button" class="btn btn-primary">Acreditar Pago Republicación</button>
       </div>
     </div>
   </div>

@@ -30,7 +30,7 @@
                       <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                         <% @publication.publication_attachments.drop(1).each do |image| %>
-                         <li data-target="#carousel-example-generic" data-slide-to="#{image.index}"></li>
+                         <li data-target="#carousel-example-generic" data-slide-to="<%= @publication.publication_attachments.index(image) %>"></li>
                         <% end %>
                       </ol>                 
                       <div class="carousel-inner">
@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-    <%- if @publication.video_link %>
+    <%- if @publication.has_video? %>
         <div class="row">
             <div class="col-md-6">
             </div>
