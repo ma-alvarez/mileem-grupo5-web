@@ -76,15 +76,15 @@
                                <%=button_to "Publicar",[:publicate, p1], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.active? %>
-                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p1], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-warning btn-xs pull-right" %>
                             <% end -%>
                             <%- if p1.missing_pay? %>
-                                <button onclick="window.idToPay = <%= p1.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                <button onclick="window.idToPay = <%= p1.id %>"  class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">
                                     Pagar
                                 </button>
                             <% end -%>
                             <%- if p1.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Reactivar",[:unpause, p1], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-success btn-xs pull-right" %>
                             <% end -%>   
                             <%=button_to "Borrar",[:retire, p1], data: { confirm: '¿Está seguro de que desea borrar su publicación?'}, class: "btn btn-danger btn-xs pull-right" %>                                         
                             <h5><%= p1.property_type %> | <%= p1.zone %></h5> 
@@ -139,15 +139,15 @@
                                <%=button_to "Publicar",[:publicate, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.active? %>
-                               <%=button_to "Pausar",[:pause, p2], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Pausar",[:pause, p2], data: { confirm: '¿Está seguro de que desea pausar su publicación?'}, class: "btn btn-warning btn-xs pull-right" %>
                             <% end -%>
                             <%- if p2.missing_pay? %>
-                                <button onclick="window.idToPay = <%= p2.id %>"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+                                <button onclick="window.idToPay = <%= p2.id %>"  class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">
                                     Pagar
                                 </button>
                             <% end -%>
                             <%- if p2.paused? %>
-                               <%=button_to "Reactivar",[:unpause, p2], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-default btn-xs pull-right" %>
+                               <%=button_to "Reactivar",[:unpause, p2], data: { confirm: '¿Está seguro de que desea reactivar su publicación?'}, class: "btn btn-success btn-xs pull-right" %>
                             <% end -%>
                             <%=button_to "Borrar",[:retire, p2], data: { confirm: '¿Está seguro de que desea borrar su publicación?'}, class: "btn btn-danger btn-xs pull-right" %>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
