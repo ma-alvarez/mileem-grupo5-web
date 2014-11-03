@@ -7,7 +7,7 @@ class PublicationsController < ApplicationController
   def index
     if params.has_value?("Buscar")
       filter_hash = {}
-      first_date = "2014-01-01".to_date
+      first_date = "2013-01-01".to_date
       last_date = "2100-01-01".to_date
       first_date = params[:first_date].to_date if !params[:first_date].blank?
       last_date = params[:last_date].to_date if !params[:last_date].blank?
