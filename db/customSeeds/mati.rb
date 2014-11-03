@@ -31,7 +31,7 @@ PublicationAttachment.create!([
   {publication_id: 3, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/12.jpg"))},
   {publication_id: 3, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/13.jpg"))},
   {publication_id: 3, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/4.jpg"))},
-  {publication_id: 4, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 4, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
   {publication_id: 4, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/2.jpg"))},
   {publication_id: 4, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/3.jpg"))},
   {publication_id: 5, image:  File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/1.jpg"))},
