@@ -52,6 +52,7 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.2.1)
+    geocoder (1.2.5)
     gon (5.2.0)
       actionpack (>= 2.3.0)
       json
@@ -176,6 +177,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0.0)
   devise
+  geocoder
   gon
   jbuilder (~> 2.0)
   jquery-rails

@@ -201,21 +201,23 @@ $(document).on("ready page:change", function() {
           $('#cc_type').val(cardType.toUpperCase());         
         }
     });
-
-  $( "#paybutton" ).click(function() {
-    $.post( "publications/" + window.idToPay + "/pay", function( data ) {
-      $('#modal').modal('hide');
-      location.reload();
-    });
-  });
-
-  $( "#repaybutton" ).click(function() {
-    $.post( "publications/" + window.idToPay + "/republicate", function( data ) {
-      $('#modal').modal('hide');
-      location.reload();
-    });
-  });
 });
+
+ $(document).on("ready", function() {
+  $( "#paybutton" ).click(function() {
+      $.post( "publications/" + window.idToPay + "/pay", function( data ) {
+        $('#modal').modal('hide');
+        location.reload();
+      });
+    });
+
+    $( "#repaybutton" ).click(function() {
+      $.post( "publications/" + window.idToPay + "/republicate", function( data ) {
+        $('#modal').modal('hide');
+        location.reload();
+      });
+    });
+  });
 
  $(document).on("ready page:change", function() {
     var marker;

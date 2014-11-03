@@ -158,10 +158,19 @@ class Publication < ActiveRecord::Base
   def republicate
     self.active = true
     self.paid = true
-     if relevance == 2
-       self.expiration_date = self.expiration_date + 3.months
-    elsif relevance == 3
-       self.expiration_date = self.expiration_date + 12.months
+    if relevance == 2
+      if self.expiration_date > Date.today
+        self.expiration_date = self.expiration_date + 3.months
+      else
+        self.expiration_date = Date.today + 3.months
+      end
+    end
+    if relevance == 3
+      if self.expiration_date > Date.today
+        self.expiration_date = self.expiration_date + 12.months
+      else
+        self.expiration_date = Date.today + 12.months
+      end
     end
   end
 
