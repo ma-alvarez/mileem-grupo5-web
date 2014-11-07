@@ -29,6 +29,12 @@ Rails.application.routes.draw do
       post 'pay'
     end
   end
+
+  resources :publications do
+    member do
+      post 'free_republicate'
+    end
+  end
   
   resources :publications do
     member do

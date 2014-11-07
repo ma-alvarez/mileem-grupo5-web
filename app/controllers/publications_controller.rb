@@ -98,24 +98,46 @@ class PublicationsController < ApplicationController
   # PATCH/PUT /publications/1.json
   def update
     error = false
-    max = max_attachments(@publication.relevance)
-    if @publication.update(publication_params)
-      if params[:publication_attachments]
-        params[:publication_attachments]['image'].each { |image|
-          if @publication.publication_attachments.count < max 
+    if publication_params[:relevance]
+      @publication.assign_attributes(publication_params)
+      max = max_attachments(@publication.relevance)
+      if @publication.valid?
+        @publication.free_republicate
+        if params[:publication_attachments]
+          if params[:publication_attachments]['image'].count + @publication.publication_attachments.count <= max 
+              @publication.update(publication_params)
+              params[:publication_attachments]['image'].each { |image|
               @publication.publication_attachments.create(image: image, publication_id: @publication.id)
-            else
-              error = true 
-            end
-        }
-      end
-      flash[:notice] = "La publicación ha sido actualizada"
-      if error 
-       flash[:error] = "Advertencia: al menos alguna imagen no ha sido cargada. Usted alcanzó el máximo de imágenes permitido por su cuenta: " + max.to_s + " imágenes"
-      end
-      redirect_to @publication
+            }
+          else
+            error = true
+            # flash[:error] = "Por favor, seleccione como máximo: " + max.to_s + " imágenes"
+          end
+        else
+          @publication.update(publication_params)
+        end
+        if !error 
+          flash[:notice] = "La publicación ha sido republicada"
+          redirect_to @publication
+        else
+          flash[:error] = "Por favor, seleccione como máximo: " + (max - @publication.publication_attachments.count).to_s  + " imágenes"
+          render :free_republicate
+        end
+      else
+        if params[:publication_attachments]
+          if params[:publication_attachments]['image'].count + @publication.publication_attachments.count > max
+            flash[:error] = "Por favor, seleccione como máximo: " + (max - @publication.publication_attachments.count).to_s + " imágenes" 
+          end
+        end
+        render :free_republicate
+    end
     else
-      render :edit
+      if @publication.update(publication_params)
+        flash[:notice] = "La publicación ha sido actualizada"
+        redirect_to @publication
+      else
+        render :edit
+      end
     end
   end
 
@@ -180,6 +202,11 @@ class PublicationsController < ApplicationController
     @publication.republicate
     @publication.save
     redirect_to publications_path
+  end
+
+  def free_republicate
+    set_publication
+    render :free_republicate
   end
 
   private
