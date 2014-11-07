@@ -1,8 +1,12 @@
-class ApiController < ApplicationController	
+class ApiController < ApplicationController 
   respond_to :json
 
+  def quotation
+    render json: {quotation: Publication::QUOTATION}
+  end
+
   def all_publications
-  	@publications = Publication.where("retired_at IS ?",nil)
+    @publications = Publication.where("retired_at IS ?",nil)
     respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
   end
 
@@ -118,5 +122,6 @@ class ApiController < ApplicationController
     respond_with @publications.as_json( include: 
       {user: {:only => [:email, :phone]}, publication_attachments: {only: :image}})
   end
+
 
 end

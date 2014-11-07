@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root :to => "publications#index"
   get '/allpublications', to: 'api#all_publications', via: [:get]
   get '/filterpublications', to: 'api#filter_publications', via: [:get]
+  get '/quotation', to: 'api#quotation', via: [:get]
 
   resources :publications do
     member do
