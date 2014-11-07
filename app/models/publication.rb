@@ -23,7 +23,10 @@ class Publication < ActiveRecord::Base
   ACCOUNT_TYPES = [['Gratuita',1],['Básica',2],['Premium',3]]
   STATUS = [['--Todos--', ''],['Activa', 'active'], ['Pausada', 'paused'], ['Finalizada', 'finished'], ['Pte. de pago', 'missing_pay'], 
   ['Lista para publicar', 'enable_to_publish']]
+
   PRICES = [100, 150]
+  DISCOUNTS = [0.5, 0.5]
+  QUOTATION = 10
 
   def type
      Publication::ACCOUNT_TYPES[relevance - 1][0]
@@ -220,7 +223,7 @@ class Publication < ActiveRecord::Base
 
   def republication_price
     if (relevance == 2 || relevance == 3) && ((expiration_date - Date.today).days <= 30.days && self.active?)
-      Publication::PRICES[relevance-2] * 0.5
+      Publication::PRICES[relevance-2] * Publication::DISCOUNTS[relevance-2]
     else
       self.standard_price
     end
