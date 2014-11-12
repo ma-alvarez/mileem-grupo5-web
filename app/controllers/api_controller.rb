@@ -5,6 +5,97 @@ class ApiController < ApplicationController
     render json: {quotation: Publication::QUOTATION}
   end
 
+  def rooms_by_zone
+    toReturn = {amb1: 0, amb2: 0, amb3: 0, amb4: 0}
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    #El barrio debe matchear en forma exacta (Mayúsculas, espacios y acentos)
+    toReturn["amb1"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],1).count
+    toReturn["amb2"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],2).count
+    toReturn["amb3"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],3).count
+    toReturn["amb4"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],4).count
+
+    render :json => toReturn.to_json
+  end
+
+  #Calcula para la zona pasada por parametro el precio promedio del metro cuadrado en dolares.
+  def calculateZoneAveragePrice(zone)
+     #El barrio debe matchear en forma exacta (Mayúsculas, espacios y acentos)
+    publicacionesEnPesos = Publication.where("zone=? AND currency=?",zone,"ARS")
+    publicacionesEnDolares = Publication.where("zone=? AND currency=?",zone,"US")
+
+    #Publicaciones en pesos
+    sumaPromediosPesos = 0
+    totPubPesos = 0
+    publicacionesEnPesos.each do |eachPublicacionEnPesos|
+      totPubPesos += 1 
+      eachPromedioPesos = eachPublicacionEnPesos.price / eachPublicacionEnPesos.area
+      sumaPromediosPesos += eachPromedioPesos
+      Rails.logger.debug "Se incluye en el resultado una propiedad en pesos. Nro: #{totPubPesos}, con precio: #{eachPublicacionEnPesos.price}, area: #{eachPublicacionEnPesos.area}"
+    end
+
+    #Publicaciones en dólares
+    sumaPromediosDolares = 0
+    totPubDolares = 0
+    publicacionesEnDolares.each do |eachPublicacionEnDolares|
+      totPubDolares += 1 
+      eachPromedioDolares = eachPublicacionEnDolares.price / eachPublicacionEnDolares.area
+      sumaPromediosDolares += eachPromedioDolares
+      Rails.logger.debug "Se incluye en el resultado una propiedad en dolares. Nro: #{totPubDolares}, con precio: #{eachPublicacionEnDolares.price}, area: #{eachPublicacionEnDolares.area}"
+    end
+    
+    #Totalización.
+    precioDolar = Publication::QUOTATION
+    Rails.logger.debug "1 dólar = #{precioDolar} pesos."
+    totalMuestras = totPubPesos + totPubDolares
+    totalPromedios = sumaPromediosPesos/precioDolar + sumaPromediosDolares
+    averageToReturn = 0
+    averageToReturn = totalPromedios / totalMuestras if (totalMuestras>0)
+    
+    Rails.logger.debug "Se devuelve el precio promedio en dolares del barrio #{zone}: #{averageToReturn}"
+    return averageToReturn
+  end
+
+  def average_by_zone
+    toReturn = {promedio: 0}
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    toReturn["promedio"] = calculateZoneAveragePrice(params['zone'])
+    render :json => toReturn.to_json
+  end
+
+  def zone_comparison
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    supportedZones = Hash[
+      "Almagro" => "Villa Crespo,Palermo,Recoleta,Balvanera,Boedo,Caballito", 
+      "Coghlan" => "Saavedra,Núñez,Belgrano,Villa Urquiza"
+    ]
+    toReturn = {}
+    aledanios = supportedZones[params['zone']]
+    if (aledanios.blank?)
+      render :json => { :errors => 'El servicio no se encuentra disponible para la zona indicada' }
+      return
+    else
+      Rails.logger.debug "Las zonas aledañas de #{params['zone']} son: #{aledanios}"
+      nearZones = []
+      nearZones = aledanios.split(",")
+      #Agrega la zona de consulta
+      toReturn[params['zone']] = calculateZoneAveragePrice(params['zone'])
+      #Y luego las aledañas
+      nearZones.each do |eachNearZone|
+        toReturn[eachNearZone] = calculateZoneAveragePrice(eachNearZone)
+      end
+    end
+    render :json => toReturn.to_json
+  end
+
   def all_publications
     @publications = Publication.where("retired_at IS ?",nil)
     respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
