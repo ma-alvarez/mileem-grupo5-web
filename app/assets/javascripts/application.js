@@ -206,7 +206,6 @@ $(document).on("ready page:change", function() {
  var buttons = function () {
    $( "#paybutton" ).click(function() {
       $.post( "publications/" + window.idToPay + "/pay", function( data ) {
-        console.log("LCDTMAB")
         $('#modal').modal('hide');
         location.reload();
       });

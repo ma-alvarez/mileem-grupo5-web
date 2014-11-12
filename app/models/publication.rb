@@ -85,6 +85,10 @@ class Publication < ActiveRecord::Base
     !(self.video_link == nil || self.video_link.empty?)
   end
 
+  def photos_count
+    self.publication_attachments.count
+  end
+
   def self.active_publications(publications)
     filtered_publications = []
     publications.each { |publication| filtered_publications << publication if publication.active? }
