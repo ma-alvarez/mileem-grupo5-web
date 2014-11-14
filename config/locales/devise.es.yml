@@ -3,7 +3,7 @@
 es:
   devise:
     confirmations:
-      confirmed: "Tu cuenta ya ha sido confirmada."
+      confirmed: "Confirmaste tu cuenta."
       confirmed_and_signed_in: "Tu cuenta ya ha sido confirmada. Has sido indentificado."
       send_instructions: "Recibirás un correo electrónico en unos minutos con instrucciones sobre cómo reestablecer tu contraseña."
       send_paranoid_instructions: "Si tu correo electrónico existe en nuestra base de datos, recibirás un correo electrónico en unos minutos con instrucciones sobre cómo reiniciar tu contraseña."

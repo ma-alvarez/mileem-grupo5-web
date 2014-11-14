@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :publications
@@ -14,5 +14,4 @@ class User < ActiveRecord::Base
       validates :phone, format: {with: /\A[0-9]{8,15}\z/,
     message: "debe contener entre 8 y 15 caracteres numéricos únicamente"}, allow_blank: true
 
-    
 end

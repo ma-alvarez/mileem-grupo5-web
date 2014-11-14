@@ -1,12 +1,29 @@
-<h2>Instrucciones para el reenvío</h2>
-
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+<%= stylesheet_link_tag "registration.css" %>
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { class: 'container'}) do |f| %>
+<%= devise_error_messages! %>
+    <div class="row vertical-offset-100">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                 <h3 class="panel-title">¿No recibiste las instrucciones?</h3>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <%= f.label :email %>
+                            <%= f.email_field :email, autofocus: true, class: "form-control" %>
+                        </div>
+                        <div class="form-group">
+                            <%= f.submit "Reenviar instrucciones", class: 'btn btn-lg btn-success btn-block' %>
+                        </div>
+                        <div class="form-group">
+                            <%= render "devise/shared/links" %>
+                        </div>
+                     </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
