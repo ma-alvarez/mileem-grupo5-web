@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
   resources :publications
   root :to => "publications#index"
   get '/allpublications', to: 'api#all_publications', via: [:get]
   get '/filterpublications', to: 'api#filter_publications', via: [:get]
   get '/quotation', to: 'api#quotation', via: [:get]
+
+ devise_for :users, :controllers => { :registrations => 'registrations' } 
 
   resources :publications do
     member do
