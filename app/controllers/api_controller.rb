@@ -5,24 +5,32 @@ class ApiController < ApplicationController
     render json: {quotation: Publication::QUOTATION}
   end
 
+  def parseZone(zone)
+    return zone.gsub('_',' ').split.map(&:capitalize).join(' ')
+  end
+
+  def toCamelCase(aString)
+    return zone.gsub('','_').split.map(&:capitalize).join('_')
+  end
+
   def rooms_by_zone
     toReturn = {amb1: 0, amb2: 0, amb3: 0, amb4: 0}
     if(!params['zone'].present?)
       render :json => { :errors => 'El parámetro zone es obligatorio' }
       return
     end
-    #El barrio debe matchear en forma exacta (Mayúsculas, espacios y acentos)
-    toReturn["amb1"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],1).count
-    toReturn["amb2"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],2).count
-    toReturn["amb3"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],3).count
-    toReturn["amb4"] = Publication.where("zone=? AND number_of_rooms=?",params[:zone],4).count
+    #El barrio se espera en camel case
+    parsedZone = parseZone(params[:zone])
+    toReturn["amb1"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,1).count
+    toReturn["amb2"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,2).count
+    toReturn["amb3"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,3).count
+    toReturn["amb4"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,4).count
 
     render :json => toReturn.to_json
   end
 
   #Calcula para la zona pasada por parametro el precio promedio del metro cuadrado en dolares.
   def calculateZoneAveragePrice(zone)
-     #El barrio debe matchear en forma exacta (Mayúsculas, espacios y acentos)
     publicacionesEnPesos = Publication.where("zone=? AND currency=?",zone,"ARS")
     publicacionesEnDolares = Publication.where("zone=? AND currency=?",zone,"US")
 
@@ -64,7 +72,9 @@ class ApiController < ApplicationController
       render :json => { :errors => 'El parámetro zone es obligatorio' }
       return
     end
-    toReturn["promedio"] = calculateZoneAveragePrice(params['zone'])
+    #El barrio se esperpza en camel case
+    parsedZone = parseZone(params['zone'])
+    toReturn["promedio"] = calculateZoneAveragePrice(parsedZone)
     render :json => toReturn.to_json
   end
 
@@ -74,11 +84,14 @@ class ApiController < ApplicationController
       return
     end
     supportedZones = Hash[
-      "Almagro" => "Villa Crespo,Palermo,Recoleta,Balvanera,Boedo,Caballito", 
+      "Agronomía" => "Villa Pueyrredón,Parque Chas,Paternal,Villa del Parque,Villa Devoto",
+      "Almagro" => "Villa Crespo,Palermo,Recoleta,Balvanera,Boedo,Caballito",
+      "Balvanera" => "Recoleta,San Nicolás,Monserrat,San Cristóbal,Almagro",
       "Coghlan" => "Saavedra,Núñez,Belgrano,Villa Urquiza"
     ]
     toReturn = {}
-    aledanios = supportedZones[params['zone']]
+    parsedZone = parseZone(params['zone'])
+    aledanios = supportedZones[parsedZone]
     if (aledanios.blank?)
       render :json => { :errors => 'El servicio no se encuentra disponible para la zona indicada' }
       return
@@ -87,7 +100,7 @@ class ApiController < ApplicationController
       nearZones = []
       nearZones = aledanios.split(",")
       #Agrega la zona de consulta
-      toReturn[params['zone']] = calculateZoneAveragePrice(params['zone'])
+      toReturn[params['zone']] = calculateZoneAveragePrice(parsedZone)
       #Y luego las aledañas
       nearZones.each do |eachNearZone|
         toReturn[eachNearZone] = calculateZoneAveragePrice(eachNearZone)
