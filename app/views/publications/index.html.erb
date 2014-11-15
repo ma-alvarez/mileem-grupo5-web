@@ -91,6 +91,9 @@
                                     Republicar
                                 </button>
                             <% end -%>
+                            <%- if p1.free_republicable? %>
+                                <%=button_to "Republicar",[:free_republicate, p1], class: "btn btn-default btn-xs pull-right" %>
+                            <% end -%>
                             <h5><%= p1.property_type %> | <%= p1.zone %></h5> 
                             <%= p1.transaction_type %>
                             <%= link_to "Ver detalle", publication_path(p1),class: "pull-right detail" %>
@@ -157,6 +160,9 @@
                                 <button onclick="$('#repaybutton').show();$('#paybutton').hide();window.idToPay = <%= p2.id %>; window.priceValue= <%= p2.republication_price %>;   $('#price_value').text(window.priceValue);"  class="btn btn-default btn-xs pull-right" data-toggle="modal" data-target="#myModal">
                                     Republicar
                                 </button>
+                            <% end -%>
+                            <%- if p2.free_republicable? %>
+                                <%=button_to "Republicar",[:free_republicate, p2], class: "btn btn-default btn-xs pull-right" %>
                             <% end -%>
                             <h5><%= p2.property_type %> | <%= p2.zone %></h5>
                             <%= p2.transaction_type %>

@@ -85,6 +85,10 @@ class Publication < ActiveRecord::Base
     !(self.video_link == nil || self.video_link.empty?)
   end
 
+  def photos_count
+    self.publication_attachments.count
+  end
+
   def self.active_publications(publications)
     filtered_publications = []
     publications.each { |publication| filtered_publications << publication if publication.active? }
@@ -158,6 +162,12 @@ class Publication < ActiveRecord::Base
     self.retired_at
   end
 
+  def free_republicate
+    self.determinate_payment
+    self.publication_date = Date.today
+    self.determinate_expiration
+  end
+
   def republicate
     self.active = true
     self.paid = true
@@ -219,6 +229,10 @@ class Publication < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def free_republicable?
+    self.relevance == 1 && self.finished?
   end
 
   def republication_price

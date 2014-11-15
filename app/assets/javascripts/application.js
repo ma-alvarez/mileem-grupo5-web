@@ -203,8 +203,8 @@ $(document).on("ready page:change", function() {
     });
 });
 
- $(document).on("ready", function() {
-  $( "#paybutton" ).click(function() {
+ var buttons = function () {
+   $( "#paybutton" ).click(function() {
       $.post( "publications/" + window.idToPay + "/pay", function( data ) {
         $('#modal').modal('hide');
         location.reload();
@@ -217,7 +217,10 @@ $(document).on("ready page:change", function() {
         location.reload();
       });
     });
-  });
+ }
+
+$(document).ready(buttons);
+$(document).on('page:load', buttons);
 
  $(document).on("ready page:change", function() {
     var marker;
