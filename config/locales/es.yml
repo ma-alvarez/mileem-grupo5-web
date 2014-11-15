@@ -227,6 +227,7 @@ es:
         phone: "Teléfono"
         password: "Contraseña"
         password_confirmation: "Confirmar contraseña"
+        current_password: "Contraseña actual"
         remember_me: "Recordarme"
       publication_attachment:
         image: "Imágenes"
