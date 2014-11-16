@@ -9,4 +9,4 @@ echo Sembrando datos iniciales…
 rake db:seed
 rake db:seed:martin
 echo Inicialización de bases terminada.
-echo Se puede ejecutar “rails server.”
+echo Se puede ejecutar “rails server”.
