@@ -32,14 +32,11 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   
   # Set up to send mails
-  config.action_mailer.delivery_method = :smtp
-
+=begin
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
@@ -48,6 +45,19 @@ Rails.application.configure do
     enable_starttls_auto: true,
     user_name: "mileem.grupo5", #ENV["MAIL_USERNAME"],
     password: "mileemgrupo5" #ENV["MAIL_PASSWORD"]
+}
+=end
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+  ActionMailer::Base.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => "mileem.grupo5@gmail.com",
+    :password             => 'mileemgrupo5',
+    :authentication       => "plain",
+    :enable_starttls_auto => true
 }
 
 end
