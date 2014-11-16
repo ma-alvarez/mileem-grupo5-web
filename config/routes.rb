@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get '/allpublications', to: 'api#all_publications', via: [:get]
   get '/filterpublications', to: 'api#filter_publications', via: [:get]
   get '/quotation', to: 'api#quotation', via: [:get]
+  get '/roomsByZone', to: 'api#rooms_by_zone', via: [:get]
+  get '/averageByZone', to: 'api#average_by_zone', via: [:get]
+  get '/zoneComparison', to: 'api#zone_comparison', via: [:get]
 
  devise_for :users, :controllers => { :registrations => 'registrations' } 
 

@@ -5,6 +5,110 @@ class ApiController < ApplicationController
     render json: {quotation: Publication::QUOTATION}
   end
 
+  def parseZone(zone)
+    return zone.gsub('_',' ').split.map(&:capitalize).join(' ')
+  end
+
+  def toCamelCase(aString)
+    return zone.gsub('','_').split.map(&:capitalize).join('_')
+  end
+
+  def rooms_by_zone
+    toReturn = {amb1: 0, amb2: 0, amb3: 0, amb4: 0}
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    #El barrio se espera en camel case
+    parsedZone = parseZone(params[:zone])
+    toReturn["amb1"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,1).count
+    toReturn["amb2"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,2).count
+    toReturn["amb3"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,3).count
+    toReturn["amb4"] = Publication.where("zone=? AND number_of_rooms=?",parsedZone,4).count
+
+    render :json => toReturn.to_json
+  end
+
+  #Calcula para la zona pasada por parametro el precio promedio del metro cuadrado en dolares.
+  def calculateZoneAveragePrice(zone)
+    publicacionesEnPesos = Publication.where("zone=? AND currency=?",zone,"ARS")
+    publicacionesEnDolares = Publication.where("zone=? AND currency=?",zone,"US")
+
+    #Publicaciones en pesos
+    sumaPromediosPesos = 0
+    totPubPesos = 0
+    publicacionesEnPesos.each do |eachPublicacionEnPesos|
+      totPubPesos += 1 
+      eachPromedioPesos = eachPublicacionEnPesos.price / eachPublicacionEnPesos.area
+      sumaPromediosPesos += eachPromedioPesos
+      Rails.logger.debug "Se incluye en el resultado una propiedad en pesos. Nro: #{totPubPesos}, con precio: #{eachPublicacionEnPesos.price}, area: #{eachPublicacionEnPesos.area}"
+    end
+
+    #Publicaciones en dólares
+    sumaPromediosDolares = 0
+    totPubDolares = 0
+    publicacionesEnDolares.each do |eachPublicacionEnDolares|
+      totPubDolares += 1 
+      eachPromedioDolares = eachPublicacionEnDolares.price / eachPublicacionEnDolares.area
+      sumaPromediosDolares += eachPromedioDolares
+      Rails.logger.debug "Se incluye en el resultado una propiedad en dolares. Nro: #{totPubDolares}, con precio: #{eachPublicacionEnDolares.price}, area: #{eachPublicacionEnDolares.area}"
+    end
+    
+    #Totalización.
+    precioDolar = Publication::QUOTATION
+    Rails.logger.debug "1 dólar = #{precioDolar} pesos."
+    totalMuestras = totPubPesos + totPubDolares
+    totalPromedios = sumaPromediosPesos/precioDolar + sumaPromediosDolares
+    averageToReturn = 0
+    averageToReturn = totalPromedios / totalMuestras if (totalMuestras>0)
+    
+    Rails.logger.debug "Se devuelve el precio promedio en dolares del barrio #{zone}: #{averageToReturn}"
+    return averageToReturn
+  end
+
+  def average_by_zone
+    toReturn = {promedio: 0}
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    #El barrio se esperpza en camel case
+    parsedZone = parseZone(params['zone'])
+    toReturn["promedio"] = calculateZoneAveragePrice(parsedZone)
+    render :json => toReturn.to_json
+  end
+
+  def zone_comparison
+    if(!params['zone'].present?)
+      render :json => { :errors => 'El parámetro zone es obligatorio' }
+      return
+    end
+    supportedZones = Hash[
+      "Agronomía" => "Villa Pueyrredón,Parque Chas,Paternal,Villa del Parque,Villa Devoto",
+      "Almagro" => "Villa Crespo,Palermo,Recoleta,Balvanera,Boedo,Caballito",
+      "Balvanera" => "Recoleta,San Nicolás,Monserrat,San Cristóbal,Almagro",
+      "Coghlan" => "Saavedra,Núñez,Belgrano,Villa Urquiza"
+    ]
+    toReturn = {}
+    parsedZone = parseZone(params['zone'])
+    aledanios = supportedZones[parsedZone]
+    if (aledanios.blank?)
+      render :json => { :errors => 'El servicio no se encuentra disponible para la zona indicada' }
+      return
+    else
+      Rails.logger.debug "Las zonas aledañas de #{params['zone']} son: #{aledanios}"
+      nearZones = []
+      nearZones = aledanios.split(",")
+      #Agrega la zona de consulta
+      toReturn[params['zone']] = calculateZoneAveragePrice(parsedZone)
+      #Y luego las aledañas
+      nearZones.each do |eachNearZone|
+        toReturn[eachNearZone] = calculateZoneAveragePrice(eachNearZone)
+      end
+    end
+    render :json => toReturn.to_json
+  end
+
   def all_publications
     @publications = Publication.where("retired_at IS ?",nil)
     respond_with @publications.as_json(include: {publication_attachments: {only: :image}})
