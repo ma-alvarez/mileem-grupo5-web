@@ -31,8 +31,8 @@ class ApiController < ApplicationController
 
   #Calcula para la zona pasada por parametro el precio promedio del metro cuadrado en dolares.
   def calculateZoneAveragePrice(zone)
-    publicacionesEnPesos = Publication.where("zone=? AND currency=?",zone,"ARS")
-    publicacionesEnDolares = Publication.where("zone=? AND currency=?",zone,"US")
+    publicacionesEnPesos = Publication.where("transaction_type=? AND zone=? AND currency=?","Compra",zone,"ARS")
+    publicacionesEnDolares = Publication.where("transaction_type=? AND zone=? AND currency=?","Compra",zone,"US")
 
     #Publicaciones en pesos
     sumaPromediosPesos = 0
@@ -100,7 +100,7 @@ class ApiController < ApplicationController
       nearZones = []
       nearZones = aledanios.split(",")
       #Agrega la zona de consulta
-      toReturn[params['zone']] = calculateZoneAveragePrice(parsedZone)
+      toReturn[parsedZone] = calculateZoneAveragePrice(parsedZone)
       #Y luego las aledañas
       nearZones.each do |eachNearZone|
         toReturn[eachNearZone] = calculateZoneAveragePrice(eachNearZone)
