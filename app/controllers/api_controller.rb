@@ -84,9 +84,7 @@ class ApiController < ApplicationController
       return
     end
     supportedZones = Hash[
-      "Agronomía" => "Villa Pueyrredón,Parque Chas,Paternal,Villa del Parque,Villa Devoto",
       "Almagro" => "Villa Crespo,Palermo,Recoleta,Balvanera,Boedo,Caballito",
-      "Balvanera" => "Recoleta,San Nicolás,Monserrat,San Cristóbal,Almagro",
       "Coghlan" => "Saavedra,Núñez,Belgrano,Villa Urquiza"
     ]
     toReturn = {}
