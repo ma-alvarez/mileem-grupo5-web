@@ -47,16 +47,75 @@ class ApiController < ApplicationController
       end
       opFiltersHash[:zone] = parsedZones
     end
-
+    
     #Rango de precios. (pricefrom y priceto,opcionales). Se modela con BETWEENS.
-    if ((params['pricefrom'].present?) && (params['priceto'].present?) )
-      opFiltersHash[:price] = params[:pricefrom].to_i..params[:priceto].to_i
-    elsif (params['priceto'].present?)
-      opFiltersHash[:price] = 0..params[:priceto].to_i
-    elsif (params['pricefrom'].present?)
-      maximumAllowedPrice = 999999999999999999
-      opFiltersHash[:price] = params[:pricefrom].to_i..maximumAllowedPrice
+    dolarPrice = Publication::QUOTATION
+    ddePesos = 0
+    ddeDolares = 0
+    htaPesos = 999999999999999999
+    htaDolares = 999999999999999999
+    if (params['currency'].present?) 
+      if ("#{params[:currency]}" == "usd")
+        #Se especificaron dólares en la consulta
+        if (params['pricefrom'].present?)
+          ddePesos = params[:pricefrom].to_i * dolarPrice
+          ddeDolares = params[:pricefrom].to_i
+        else
+          ddePesos = 0
+          ddeDolares = 0
+        end
+        if (params['priceto'].present?)
+          htaPesos = params[:priceto].to_i * dolarPrice
+          htaDolares = params[:priceto].to_i
+        else
+          htaPesos = 999999999999999999
+          htaDolares = 999999999999999999
+        end
+      elsif ("#{params[:currency]}" == "ars")
+        #Se especificaron pesos en la consulta
+        if (params['pricefrom'].present?)
+          ddePesos = params[:pricefrom].to_i
+          ddeDolares = params[:pricefrom].to_i / dolarPrice
+        else
+          ddePesos = 0
+          ddeDolares = 0
+        end
+        if (params['priceto'].present?)
+          htaPesos = params[:priceto].to_i
+          htaDolares = params[:priceto].to_i / dolarPrice
+        else
+          htaPesos = 999999999999999999
+          htaDolares = 999999999999999999
+        end
+      end
+    else
+      #No se especificó moneda en la consulta, por defecto se consideran pesos.
+      if ((params['pricefrom'].present?) && (params['priceto'].present?) )
+        ddePesos = params[:pricefrom].to_i
+        htaPesos = params[:priceto].to_i
+        ddeDolares = params[:pricefrom].to_i / dolarPrice
+        htaDolares = params[:priceto].to_i / dolarPrice
+      elsif (params['priceto'].present?)
+        ddePesos = 0
+        htaPesos = params[:priceto].to_i
+        ddeDolares = 0
+        htaDolares = params[:priceto].to_i / dolarPrice
+      elsif (params['pricefrom'].present?)
+        ddePesos = params[:pricefrom].to_i
+        htaPesos = 999999999999999999
+        ddeDolares = params[:pricefrom].to_i / dolarPrice
+        htaDolares = 999999999999999999
+      end
     end
+    
+    # Rails.logger.debug "Precio dolar: #{dolarPrice}"
+    # Rails.logger.debug "Pesos dde: #{ddePesos}"
+    # Rails.logger.debug "Pesos hta: #{htaPesos}"
+    # Rails.logger.debug "Dolares dde: #{ddeDolares}"
+    # Rails.logger.debug "Dolares hta: #{htaDolares}"
+
+    precioQuery = "(currency=? AND price>=? AND price<=?) OR (currency=? AND price>=? AND price<=?)"
+    
 
     #Rango de superficies (supfrom y supto, opcionales). Se modela con BETWEENS.
     if ((params['supfrom'].present?) && (params['supto'].present?) )
@@ -117,8 +176,8 @@ class ApiController < ApplicationController
     #Si page=2 y count=5, devuelve los registros desde el 6to
     offsetSentence = (((params['page'].to_i) -1) * (params['count'].to_i))
 
-    @publications = Publication.where("retired_at IS ?",nil).where(opFiltersHash).order(orderSentence).limit(limitSentence).offset(offsetSentence)
-    
+    # @publications = Publication.where("retired_at IS ?",nil).where(precioQuery).where(opFiltersHash).order(orderSentence).limit(limitSentence).offset(offsetSentence)
+    @publications = Publication.where("retired_at IS ?",nil).where(opFiltersHash).where(precioQuery,'US',ddeDolares,htaDolares,'ARS',ddePesos,htaPesos).order(orderSentence).limit(limitSentence).offset(offsetSentence)
     respond_with @publications.as_json( include: 
       {user: {:only => [:email, :phone]}, publication_attachments: {only: :image}})
   end
