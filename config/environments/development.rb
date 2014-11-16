@@ -51,7 +51,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default :charset => "utf-8"
-  ActionMailer::Base.smtp_settings = {
+  #ActionMailer::Base.smtp_settings = {
+  config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :user_name            => "mileem.grupo5@gmail.com",
