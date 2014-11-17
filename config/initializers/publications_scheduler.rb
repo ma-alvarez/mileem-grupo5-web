@@ -2,7 +2,7 @@ require 'rufus-scheduler'
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.every '5m' do
+scheduler.every '50m' do
 	#Deactivate active publications whose expiration date is today.
 	deactivationHash = { }
 	deactivationHash[:active] = true

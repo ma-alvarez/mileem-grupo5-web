@@ -1,4 +1,4 @@
-puts "Esto puede llevar un tiempito. Paciencia..."
+puts "Creando usuarios..."
 
 user_carlos = User.create!(
       full_name: 'Carlos Fontana',
@@ -22,6 +22,14 @@ user_alejandro = User.create!(
       password: 'asdfasdf', 
       password_confirmation: 'asdfasdf',
       phone: "1533333333",
+      confirmed_at: "2014-11-16 20:14:59")
+
+user_prueba = User.create!(
+      full_name: 'Usuario Prueba',
+      email: 'usuarioprueba@mileem.com', 
+      password: 'asdfasdf', 
+      password_confirmation: 'asdfasdf',
+      phone: "1544444444",
       confirmed_at: "2014-11-16 20:14:59")
 
 puts "Usuarios creados."      
@@ -88,29 +96,70 @@ latitudes << -34.612989; longitudes << -58.447554
 latitudes << -34.615814; longitudes << -58.451417
 
 
+#Coghlan y aledaños (Saavedra,Núñez,Belgrano,Villa Urquiza)
+latitudes << -34.559729; longitudes << -58.475667
+latitudes << -34.561355; longitudes << -58.475152
+latitudes << -34.561956; longitudes << -58.478628
+latitudes << -34.562062; longitudes << -58.477512
+latitudes << -34.562486; longitudes << -58.479615
+latitudes << -34.561602; longitudes << -58.474251
+latitudes << -34.558280; longitudes << -58.481975
+latitudes << -34.558916; longitudes << -58.478328
+latitudes << -34.560047; longitudes << -58.474894
+latitudes << -34.561920; longitudes << -58.481417
+
+#Saavedra
+latitudes << -34.548065; longitudes << -58.483949
+latitudes << -34.547111; longitudes << -58.481932
+latitudes << -34.553085; longitudes << -58.481375
+latitudes << -34.553438; longitudes << -58.486267
+latitudes << -34.552660; longitudes << -58.477212
+
+#Núñez
+latitudes << -34.549373; longitudes << -58.465110
+latitudes << -34.549232; longitudes << -58.465195
+latitudes << -34.553827; longitudes << -58.466054
+latitudes << -34.548030; longitudes << -58.461762
+latitudes << -34.551353; longitudes << -58.469530
+
+#Belgrano
+latitudes << -34.561002; longitudes << -58.459101
+latitudes << -34.562274; longitudes << -58.460775
+latitudes << -34.562839; longitudes << -58.461419
+latitudes << -34.563723; longitudes << -58.459402
+latitudes << -34.564218; longitudes << -58.457943
+
+#Villa Urquiza
+latitudes << -34.572628; longitudes << -58.493305
+latitudes << -34.570225; longitudes << -58.494764
+latitudes << -34.574218; longitudes << -58.493219
+latitudes << -34.567186; longitudes << -58.492232
+latitudes << -34.572946; longitudes << -58.490988
+
 
 # Carlos
 puts "Creando publicaciones de Carlos Fontana (usuario \"carlos@mileem.com\", password: \"asdfasdf\")..."
 
 Publication.create!([
-
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 3100000, expenses: 0, age: 5, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 320000, expenses: 0, age: 8, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 330000, expenses: 0, age: 6, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 340000, expenses: 0, age: 7, user_id: user_carlos.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", paid: true, expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 360000, expenses: 0, age: 4, user_id: user_carlos.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 140000, expenses: 0, age: 2, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=mehaW2UJdjY" },
+  #Villa urquiza
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 3123000, expenses: 0, age: 5, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 300000, expenses: 0, age: 8, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 310000, expenses: 0, age: 6, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 320000, expenses: 0, age: 7, user_id: user_carlos.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", paid: true, expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 340000, expenses: 0, age: 4, user_id: user_carlos.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  #Belgrano
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 160000, expenses: 0, age: 2, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=mehaW2UJdjY" },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 850000, expenses: 700, age: 10, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 110000, expenses: 800, age: 11, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 120000, expenses: 900, age: 12, user_id: user_carlos.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 145000, expenses: 1000, age: 13, user_id: user_carlos.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 310000, expenses: 0, age: 5, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=76LR0tp-gc8" },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 100000, expenses: 800, age: 11, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 150000, expenses: 900, age: 12, user_id: user_carlos.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 170000, expenses: 1000, age: 13, user_id: user_carlos.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  #Núñez
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 320000, expenses: 0, age: 5, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=76LR0tp-gc8" },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3200000, expenses: 0, age: 8, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=0-lOraBbkiw" },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 3300000, expenses: 0, age: 6, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 3400000, expenses: 0, age: 7, user_id: user_carlos.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 350200, expenses: 0, age: 4, user_id: user_carlos.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=76LR0tp-gc8" },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 358200, expenses: 0, age: 4, user_id: user_carlos.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0, video_link: "https://www.youtube.com/watch?v=76LR0tp-gc8" },
+  #Saavedra
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 380300, expenses: 0, age: 11, user_id: user_carlos.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 }
 ])
 
@@ -118,24 +167,24 @@ Publication.create!([
 puts "Creando publicaciones de Mario Giovani (usuario \"mario@mileem.com\", password: \"asdfasdf\")..."
 
 Publication.create!([
-
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 1150000, expenses: 0, age: 3, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1400000, expenses: 0, age: 2, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 87000, expenses: 700, age: 10, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  #Saavedra
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 1200000, expenses: 0, age: 3, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1800000, expenses: 0, age: 2, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 90000, expenses: 700, age: 10, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1100000, expenses: 800, age: 11, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  #Coghlan
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 1200000, expenses: 900, age: 12, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1300000, expenses: 1000, age: 13, user_id: user_mario.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 3160000, expenses: 0, age: 5, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3280000, expenses: 0, age: 8, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 331000, expenses: 0, age: 6, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 332000, expenses: 0, age: 7, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 330000, expenses: 0, age: 4, user_id: user_mario.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 3500000, expenses: 0, age: 7, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 398000, expenses: 0, age: 6, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 90000, expenses: 0, age: 14, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1200000, expenses: 0, age: 9, user_id: user_mario.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  #Aca empieza Almagro y alrededores
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 4, price: 120000, expenses: 0, age: 3, user_id: user_mario.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 }
 ])
  
@@ -149,14 +198,12 @@ Publication.create!([
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 345000, expenses: 0, age: 6, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 85000, expenses: 0, age: 14, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 87600, expenses: 0, age: 9, user_id: user_alejandro.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-  
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3458000, expenses: 0, age: 11, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 3500000, expenses: 0, age: 7, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 3786000, expenses: 0, age: 6, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 84000, expenses: 0, age: 14, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1200000, expenses: 0, age: 9, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 130000, expenses: 0, age: 3, user_id: user_alejandro.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
-
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 142000, expenses: 0, age: 2, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 1050000, expenses: 700, age: 10, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 113000, expenses: 800, age: 11, user_id: user_alejandro.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
@@ -164,7 +211,49 @@ Publication.create!([
   {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1360000, expenses: 1000, age: 13, user_id: user_alejandro.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 }
 ])
 
-puts "Publicaciones creadas sin imágenes."
+# Prueba
+puts "Creando publicaciones de Usuario Prueba (usuario \"usuarioprueba@mileem.com\", password: \"asdfasdf\")..."
+  
+Publication.create!([  
+
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3830000, expenses: 0, age: 11, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 245500, expenses: 0, age: 7, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 345000, expenses: 0, age: 6, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 85000, expenses: 0, age: 14, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 87600, expenses: 0, age: 9, user_id: user_prueba.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3458000, expenses: 0, age: 11, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 3500000, expenses: 0, age: 7, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 3786000, expenses: 0, age: 6, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 84000, expenses: 0, age: 14, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1200000, expenses: 0, age: 9, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 130000, expenses: 0, age: 3, user_id: user_prueba.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 142000, expenses: 0, age: 2, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 1050000, expenses: 700, age: 10, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 113000, expenses: 800, age: 11, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 126000, expenses: 900, age: 12, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1360000, expenses: 1000, age: 13, user_id: user_prueba.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 87000, expenses: 700, age: 10, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "US", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1100000, expenses: 800, age: 11, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 3, price: 1200000, expenses: 900, age: 12, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 80, number_of_rooms: 4, price: 1300000, expenses: 1000, age: 13, user_id: user_prueba.id, publication_date: (Time.now - 1.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 1, currency: "ARS", expiration_date: (Time.now + 1.months - 1.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 150, number_of_rooms: 1, price: 3160000, expenses: 0, age: 5, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 160, number_of_rooms: 2, price: 3280000, expenses: 0, age: 8, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "ARS", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 331000, expenses: 0, age: 6, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 332000, expenses: 0, age: 7, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 1, price: 280000, expenses: 0, age: 4, user_id: user_prueba.id, publication_date: (Time.now - 3.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 2, currency: "US", expiration_date: (Time.now + 3.months - 3.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 170, number_of_rooms: 3, price: 3456000, expenses: 0, age: 7, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Casa", address: address(latitudes.last,longitudes.last), area: 180, number_of_rooms: 4, price: 398000, expenses: 0, age: 6, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: false, active: false, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 50, number_of_rooms: 1, price: 90000, expenses: 0, age: 14, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 60, number_of_rooms: 2, price: 1200000, expenses: 0, age: 9, user_id: user_prueba.id, publication_date: Time.now.strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "ARS", expiration_date: (Time.now + 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 },
+  {latitude: latitudes.last, longitude: longitudes.last, transaction_type: "Compra", property_type: "Departamento", address: address(latitudes.last,longitudes.last), area: 70, number_of_rooms: 4, price: 120000, expenses: 0, age: 3, user_id: user_prueba.id, publication_date: (Time.now - 12.months).strftime("%Y-%m-%d"), zone: zone(latitudes.pop,longitudes.pop), relevance: 3, currency: "US", expiration_date: (Time.now + 12.months - 12.months).strftime("%Y-%m-%d"), pause_counter: 0, paid: true, active: true, remaining_days: 0 }
+])
+puts "Publicaciones creadas."
+
+puts "Añadiendo imágenes a las publicaciones..."
 
 PublicationAttachment.create!([
   {publication_id: 1, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/casas/1.jpg"))},
@@ -310,7 +399,97 @@ PublicationAttachment.create!([
   {publication_id: 47, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/9.jpg"))},
   {publication_id: 48, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
   {publication_id: 48, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
-  {publication_id: 48, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))}
+  {publication_id: 48, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 49, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 49, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 49, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 50, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 50, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 50, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 51, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 51, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 51, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 52, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 52, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 52, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 53, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 53, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 53, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 54, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 54, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 54, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 55, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 55, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 55, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 56, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 56, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 56, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 57, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 57, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 57, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 58, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 58, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 58, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 59, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 59, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 59, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 60, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 60, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 60, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 61, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 61, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 61, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 62, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 62, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 62, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 63, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 63, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 63, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 64, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 64, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 64, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 65, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 65, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 65, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 66, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 66, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 66, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 67, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 67, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 67, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 68, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 68, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 68, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 69, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 69, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 69, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 70, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 70, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 70, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 71, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 71, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 71, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 72, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 72, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 72, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 73, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 73, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 73, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 74, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 74, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 74, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 75, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 75, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 75, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 76, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 76, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 76, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 77, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 77, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 77, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))},
+  {publication_id: 78, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/8.jpg"))},
+  {publication_id: 78, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/7.jpg"))},
+  {publication_id: 78, image: File.new(File.join(Rails.root, "/public/imagenesDePrueba/departamentos/6.jpg"))}
 ])
 
-puts "Imágenes agregadas."
+puts "Listo."
